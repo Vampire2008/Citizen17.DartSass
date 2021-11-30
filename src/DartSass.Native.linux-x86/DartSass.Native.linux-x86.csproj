@@ -14,17 +14,17 @@
 			<PackagePath>build\runtime.linux-x86.DartSass.props</PackagePath>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Include="..\..\dart-sass\linux-ia32\dart-sass\sass" Link="runtime\sass">
+		<None Include="..\..\dart-sass\linux-ia32\dart-sass\sass" Link="dart-sass.linux-x86\sass">
 			<Pack>true</Pack>
 			<PackagePath>runtimes/dart-sass.linux-x86/sass</PackagePath>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Include="..\..\dart-sass\linux-ia32\dart-sass\src\dart" Link="runtime\src\dart">
+		<None Include="..\..\dart-sass\linux-ia32\dart-sass\src\dart" Link="dart-sass.linux-x86\src\dart">
 			<Pack>true</Pack>
 			<PackagePath>runtimes/dart-sass.linux-x86/src/dart</PackagePath>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Include="..\..\dart-sass\linux-ia32\dart-sass\src\sass.snapshot" Link="runtime\src\sass.snapshot">
+		<None Include="..\..\dart-sass\linux-ia32\dart-sass\src\sass.snapshot" Link="dart-sass.linux-x86\src\sass.snapshot">
 			<Pack>true</Pack>
 			<PackagePath>runtimes/dart-sass.linux-x86/src/sass.snapshot</PackagePath>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
