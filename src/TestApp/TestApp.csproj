@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="DartSassHost" Version="1.0.0-preview7" />
+		<PackageReference Include="JavaScriptEngineSwitcher.V8" Version="3.14.0" />
+		<PackageReference Include="LibSassHost" Version="1.3.3" />
+		<PackageReference Include="LibSassHost.Native.win-x64" Version="1.3.3" />
+		<PackageReference Include="libsassnetstandard" Version="3.3.8" />
+		<PackageReference Include="Microsoft.ClearScript.V8.Native.win-x64" Version="7.2.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\DartSass.Native.linux-x64\DartSass.Native.linux-x64.csproj" />
+		<ProjectReference Include="..\DartSass\Citizen17.DartSass.csproj" />
+		<ProjectReference Include="..\DartSass.Native.win-x64\DartSass.Native.win-x64.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="ErrorSheet.scss">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="TestSheet3.scss">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="TestSheet4.scss">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="TestSheet2.scss">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="TestSheet.scss">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
+		<WarningLevel>5</WarningLevel>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|AnyCPU'">
+		<WarningLevel>5</WarningLevel>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+		<Authors>Mikhail Kislenko</Authors>
+		<Description>
+			Library for compiling Sass files using Dart Sass runtime.
+			Dart Sass should be install in system or add one of following packages:
+			DartSass.Native.win-x64
+			DartSass.Native.win-x86
+			DartSass.Native.linux-x64
+			DartSass.Native.linux-x86
+			DartSass.Native.macos-x64
+		</Description>
+		<RepositoryUrl>https://github.com/Vampire2008/Citizen17.DartSass</RepositoryUrl>
+		<SignAssembly>False</SignAssembly>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
+
+	<Import Project="../../build/common.props" />
+
+	<ItemGroup>
+		<None Include="..\..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <PackageTags>dart;sass;scss</PackageTags>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+</Project>

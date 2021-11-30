@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+		<Description>Dart Sass runtime for Linux x86</Description>
+	</PropertyGroup>
+
+	<Import Project="../../build/runtime.props" />
+	<Import Project="../../build/common.props"/>
+
+	<ItemGroup>
+		<None Update="build\runtime.linux-x86.DartSass.props">
+			<Pack>true</Pack>
+			<PackagePath>build\runtime.linux-x86.DartSass.props</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\dart-sass\linux-ia32\dart-sass\sass" Link="runtime\sass">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.linux-x86/sass</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\dart-sass\linux-ia32\dart-sass\src\dart" Link="runtime\src\dart">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.linux-x86/src/dart</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\dart-sass\linux-ia32\dart-sass\src\sass.snapshot" Link="runtime\src\sass.snapshot">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.linux-x86/src/sass.snapshot</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+</Project>

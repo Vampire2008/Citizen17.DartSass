@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+		<Description>Dart Sass runtime for Linux x64</Description>
+	</PropertyGroup>
+
+	<Import Project="../../build/runtime.props" />
+	<Import Project="../../build/common.props"/>
+
+	<ItemGroup>
+		<None Update="build\runtime.linux-x64.DartSass.props">
+			<Pack>true</Pack>
+			<PackagePath>build\runtime.linux-x64.DartSass.props</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\dart-sass\linux-x64\dart-sass\sass" Link="dart-sass.linux-x64\sass">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.linux-x64/sass</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+</Project>

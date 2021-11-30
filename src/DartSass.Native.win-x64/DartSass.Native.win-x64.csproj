@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+		<Description>Dart Sass runtime for Windows x64</Description>
+	</PropertyGroup>
+
+	<Import Project="../../build/runtime.props" />
+	<Import Project="../../build/common.props" />
+
+	<ItemGroup>
+		<None Update="build\DartSass.Native.win-x64.props">
+			<Pack>true</Pack>
+			<PackagePath>build\DartSass.Native.win-x64.props</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\dart-sass\win-x64\dart-sass\sass.bat" Link="dart-sass.win-x64\sass.bat">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.win-x64/sass.bat</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\dart-sass\win-x64\dart-sass\src\dart.exe" Link="dart-sass.win-x64\src\dart.exe">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.win-x64/src/dart.exe</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\dart-sass\win-x64\dart-sass\src\sass.snapshot" Link="dart-sass.win-x64\src\sass.snapshot">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.win-x64/src/sass.snapshot</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+</Project>
