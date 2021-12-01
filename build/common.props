@@ -1,5 +1,6 @@
 <Project>
   <PropertyGroup>
+	<RepositoryUrl>https://github.com/Vampire2008/Citizen17.DartSass</RepositoryUrl>
     <PackageTags>dart;sass;scss</PackageTags>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
