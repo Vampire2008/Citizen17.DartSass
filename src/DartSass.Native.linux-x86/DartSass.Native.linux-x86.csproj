@@ -6,12 +6,12 @@
 	</PropertyGroup>
 
 	<Import Project="../../build/runtime.props" />
-	<Import Project="../../build/common.props"/>
+	<Import Project="../../build/common.props" />
 
 	<ItemGroup>
-		<None Update="build\runtime.linux-x86.DartSass.props">
+		<None Update="build\DartSass.Native.linux-x86.props">
 			<Pack>true</Pack>
-			<PackagePath>build\runtime.linux-x86.DartSass.props</PackagePath>
+			<PackagePath>build\DartSass.Native.linux-x86.props</PackagePath>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Include="..\..\dart-sass\linux-ia32\dart-sass\sass" Link="dart-sass.linux-x86\sass">

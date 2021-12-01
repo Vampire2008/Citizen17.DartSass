@@ -6,12 +6,12 @@
 	</PropertyGroup>
 
 	<Import Project="../../build/runtime.props" />
-	<Import Project="../../build/common.props"/>
+	<Import Project="../../build/common.props" />
 
 	<ItemGroup>
-		<None Update="build\runtime.macos-x64.DartSass.props">
+		<None Update="build\DartSass.Native.macos-x64.props">
 			<Pack>true</Pack>
-			<PackagePath>build\runtime.macos-x64.DartSass.props</PackagePath>
+			<PackagePath>build\DartSass.Native.macos-x64.props</PackagePath>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Include="..\..\dart-sass\macos-x64\dart-sass\sass" Link="dart-sass.macos-x64\sass">

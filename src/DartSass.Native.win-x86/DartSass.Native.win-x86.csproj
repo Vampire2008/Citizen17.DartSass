@@ -6,12 +6,12 @@
 	</PropertyGroup>
 
 	<Import Project="../../build/runtime.props" />
-	<Import Project="../../build/common.props"/>
+	<Import Project="../../build/common.props" />
 
 	<ItemGroup>
-		<None Update="build\runtime.win-x86.DartSass.props">
+		<None Update="build\DartSass.Native.win-x86.props">
 			<Pack>true</Pack>
-			<PackagePath>build\runtime.win-x86.DartSass.props</PackagePath>
+			<PackagePath>build\DartSass.Native.win-x86.props</PackagePath>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Include="..\..\dart-sass\win-ia32\dart-sass\sass.bat" Link="dart-sass.win-x86\sass.bat">

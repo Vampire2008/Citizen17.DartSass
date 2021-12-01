@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
@@ -6,12 +6,12 @@
 	</PropertyGroup>
 
 	<Import Project="../../build/runtime.props" />
-	<Import Project="../../build/common.props"/>
+	<Import Project="../../build/common.props" />
 
 	<ItemGroup>
-		<None Update="build\runtime.linux-x64.DartSass.props">
+		<None Update="build\DartSass.Native.linux-x64.props">
 			<Pack>true</Pack>
-			<PackagePath>build\runtime.linux-x64.DartSass.props</PackagePath>
+			<PackagePath>build\DartSass.Native.linux-x64.props</PackagePath>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Include="..\..\dart-sass\linux-x64\dart-sass\sass" Link="dart-sass.linux-x64\sass">
