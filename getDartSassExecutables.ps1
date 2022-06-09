@@ -18,8 +18,16 @@ Invoke-WebRequest -Uri "$($DownloadUrl)dart-sass-$($DartSassVersion)-linux-ia32.
 New-Item -ItemType Directory -Force "./dart-sass/linux-ia32"
 tar -xf "$TempDir/linux-ia32.tar.gz" -C "./dart-sass/linux-ia32"
 
+Invoke-WebRequest -Uri "$($DownloadUrl)dart-sass-$($DartSassVersion)-linux-arm64.tar.gz" -OutFile "$TempDir/linux-arm64.tar.gz"
+New-Item -ItemType Directory -Force "./dart-sass/linux-arm64"
+tar -xf "$TempDir/linux-arm64.tar.gz" -C "./dart-sass/linux-arm64"
+
 Invoke-WebRequest -Uri "$($DownloadUrl)dart-sass-$($DartSassVersion)-macos-x64.tar.gz" -OutFile "$TempDir/macos-x64.tar.gz"
 New-Item -ItemType Directory -Force "./dart-sass/macos-x64"
 tar -xf "$TempDir/macos-x64.tar.gz" -C "./dart-sass/macos-x64"
+
+Invoke-WebRequest -Uri "$($DownloadUrl)dart-sass-$($DartSassVersion)-macos-arm64.tar.gz" -OutFile "$TempDir/macos-arm64.tar.gz"
+New-Item -ItemType Directory -Force "./dart-sass/macos-arm64"
+tar -xf "$TempDir/macos-arm64.tar.gz" -C "./dart-sass/macos-arm64"
 
 Remove-Item -Path $TempDir -Recurse

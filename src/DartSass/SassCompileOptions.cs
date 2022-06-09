@@ -51,6 +51,12 @@ namespace Citizen17.DartSass
         /// </summary>
         public bool Update { get; set; }
 
+        /// <summary>
+        /// Tells Sass not to emit any warnings when compiling.
+        /// <seealso href="https://sass-lang.com/documentation/cli/dart-sass#quiet"/>
+        /// </summary>
+        public bool? Quiet { get; set; }
+
         internal string BuildArgs(bool outputToSdtout)
         {
             var sb = new StringBuilder();
@@ -94,14 +100,7 @@ namespace Citizen17.DartSass
 
             if (EmbedSourceMap.HasValue)
             {
-                if (EmbedSourceMap.Value)
-                {
-                    sb.Append("--embed-source-map ");
-                }
-                else
-                {
-                    sb.Append("--no-embed-source-map ");
-                }
+                sb.Append(EmbedSourceMap.Value ? "--embed-source-map " : "--no-embed-source-map ");
             }
 
             if (StyleType.HasValue)
@@ -113,14 +112,7 @@ namespace Citizen17.DartSass
 
             if (EmitCharset.HasValue)
             {
-                if (EmitCharset.Value)
-                {
-                    sb.Append("--charset ");
-                }
-                else
-                {
-                    sb.Append("--no-charset ");
-                }
+                sb.Append(EmitCharset.Value ? "--charset " : "--no-charset ");
             }
 
             if (Update && !outputToSdtout)
@@ -141,6 +133,11 @@ namespace Citizen17.DartSass
                     sb.Append(path);
                     sb.Append(' ');
                 }
+            }
+
+            if (Quiet.HasValue)
+            {
+                sb.Append(Quiet.Value ? "-q " : "--no-quiet");
             }
 
             return sb.ToString();

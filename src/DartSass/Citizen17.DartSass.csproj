@@ -10,16 +10,23 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+		<LangVersion>latest</LangVersion>
 		<Authors>Mikhail Kislenko</Authors>
 		<Description>Library for compiling Sass files using Dart Sass runtime.
 Dart Sass should be install in system or add one of following packages:
  * DartSass.Native.win-x64
  * DartSass.Native.win-x86
  * DartSass.Native.linux-x64
+ * DartSass.Native.linux-arm64
  * DartSass.Native.linux-x86
- * DartSass.Native.macos-x64</Description>
+ * DartSass.Native.macos-x64
+ * DartSass.Native.macos-arm64</Description>
 		<SignAssembly>False</SignAssembly>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<Version>1.1.0</Version>
+		<PackageReleaseNotes>v 1.1.0:
+ * Added support of Linux Arm64 and MacOS arm64
+ * Added support of -q flag</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<Import Project="../../build/common.props" />

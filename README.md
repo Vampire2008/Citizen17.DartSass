@@ -11,8 +11,10 @@ By default package doesn't contain Dart Sass runtime. It can use installed in sy
  * DartSass.Native.win-x64
  * DartSass.Native.win-x86
  * DartSass.Native.linux-x64
+ * DartSass.Native.linux-arm64
  * DartSass.Native.linux-x86
  * DartSass.Native.macos-x64
+ * DartSass.Native.macos-arm64
 
 ## Usage
 

@@ -27,7 +27,7 @@ namespace Citizen17.DartSass
         {
             if (File.Exists(pathToExecutable))
             {
-                _runtime = new DartSassRuntime(pathToExecutable);
+                _runtime = new(pathToExecutable);
                 return;
             }
 
@@ -52,17 +52,28 @@ namespace Citizen17.DartSass
                 {
                     pathToExecutable = "./dart-sass.linux-x86/sass";
                 }
+                else if (RuntimeInformation.OSArchitecture == Architecture.Arm64)
+                {
+                    pathToExecutable = "./dart-sass.linux-arm64/sass";
+                }
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                pathToExecutable = "./dart-sass.macos-x64/sass";
+                if (RuntimeInformation.OSArchitecture == Architecture.X64)
+                {
+                    pathToExecutable = "./dart-sass.macos-x64/sass";
+                }
+                else if (RuntimeInformation.OSArchitecture == Architecture.Arm64)
+                {
+                    pathToExecutable = "./dart-sass.macos-arm64/sass";
+                }
             }
 
             if (!File.Exists(pathToExecutable))
             {
-                var enviromentPath = Environment.GetEnvironmentVariable("PATH");
+                var environmentPath = Environment.GetEnvironmentVariable("PATH");
 
-                var paths = enviromentPath.Split(';');
+                var paths = environmentPath.Split(';');
                 pathToExecutable = paths.SelectMany(x => new[] { "", ".bat", ".sh" }.Select(e => Path.Combine(x, $"sass{e}")))
                     .FirstOrDefault(x => File.Exists(x));
 
@@ -72,7 +83,7 @@ namespace Citizen17.DartSass
                 }
             }
 
-            _runtime = new DartSassRuntime(pathToExecutable);
+            _runtime = new(pathToExecutable);
         }
 
         /// <summary>
@@ -262,12 +273,12 @@ namespace Citizen17.DartSass
                 }
                 catch
                 {
-                    return new SassException(output);
+                    return new(output);
                 }
             }
             else
             {
-                return new SassException(output);
+                return new(output);
             }
         }
     }
