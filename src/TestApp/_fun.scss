@@ -1,0 +1,9 @@
+@import 'mix';
+
+@mixin myWarn {
+    width: (5px / 2px);
+	@warn "My warning";
+    @include name;
+}
+
+@debug "Message"

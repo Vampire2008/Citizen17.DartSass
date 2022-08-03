@@ -1,0 +1,22 @@
+﻿@import './fun';
+// @error "error";
+
+.my-class {
+    width: (5px / 2px);
+	@include myWarn
+}
+
+.my-class {
+    width: (5px / 2px);
+	@include myWarn
+}
+
+.my-class {
+    width: (5px / 2px);
+	@include myWarn
+}
+
+body {
+	@include myWarn;
+	color: hsl(0.5turn, 10%, 10%);
+}

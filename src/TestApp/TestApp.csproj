@@ -24,6 +24,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Update="ErrorSheet2.scss">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="WarnSheet.scss">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 		<None Update="ErrorSheet.scss">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
@@ -38,6 +44,12 @@
 		</None>
 		<None Update="TestSheet.scss">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="_fun.scss">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="_mix.scss">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
 

@@ -1,0 +1,122 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+	  <!-- Temporary: wait for https://github.com/dotnet/sdk/issues/10606 -->
+	  <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+	<Import Project="../../build/runtime.props" />
+	<Import Project="../../build/common.props" />
+
+	<ItemGroup>
+		<None Update="build\DartSass.Native.targets">
+			<Pack>true</Pack>
+			<PackagePath>build\DartSass.Native.targets</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\dart-sass\win-x64\dart-sass\sass.bat" Link="dart-sass.win-x64\sass.bat">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.win-x64/sass.bat</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\dart-sass\win-x64\dart-sass\src\dart.exe" Link="dart-sass.win-x64\src\dart.exe">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.win-x64/src/dart.exe</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\dart-sass\win-x64\dart-sass\src\sass.snapshot" Link="dart-sass.win-x64\src\sass.snapshot">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.win-x64/src/sass.snapshot</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\..\dart-sass\win-ia32\dart-sass\sass.bat" Link="dart-sass.win-x86\sass.bat">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.win-x86/sass.bat</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\dart-sass\win-ia32\dart-sass\src\dart.exe" Link="dart-sass.win-x86\src\dart.exe">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.win-x86/src/dart.exe</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\dart-sass\win-ia32\dart-sass\src\sass.snapshot" Link="dart-sass.win-x86\src\sass.snapshot">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.win-x86/src/sass.snapshot</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\..\dart-sass\linux-x64\dart-sass\sass" Link="dart-sass.linux-x64\sass">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.linux-x64/sass</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\..\dart-sass\linux-ia32\dart-sass\sass" Link="dart-sass.linux-x86\sass">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.linux-x86/sass</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\dart-sass\linux-ia32\dart-sass\src\dart" Link="dart-sass.linux-x86\src\dart">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.linux-x86/src/dart</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\dart-sass\linux-ia32\dart-sass\src\sass.snapshot" Link="dart-sass.linux-x86\src\sass.snapshot">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.linux-x86/src/sass.snapshot</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\..\dart-sass\linux-arm64\dart-sass\sass" Link="dart-sass.linux-arm64\sass">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.linux-arm64/sass</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\..\dart-sass\macos-x64\dart-sass\sass" Link="dart-sass.macos-x64\sass">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.macos-x64/sass</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\dart-sass\macos-x64\dart-sass\src\dart" Link="dart-sass.macos-x64\src\dart">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.macos-x64/src/dart</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\dart-sass\macos-x64\dart-sass\src\sass.snapshot" Link="dart-sass.macos-x64\src\sass.snapshot">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.macos-x64/src/sass.snapshot</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\..\dart-sass\macos-arm64\dart-sass\sass" Link="dart-sass.macos-arm64\sass">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.macos-arm64/sass</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\dart-sass\macos-arm64\dart-sass\src\dart" Link="dart-sass.macos-arm64\src\dart">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.macos-arm64/src/dart</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\dart-sass\macos-arm64\dart-sass\src\sass.snapshot" Link="dart-sass.macos-arm64\src\sass.snapshot">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.macos-arm64/src/sass.snapshot</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+</Project>

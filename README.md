@@ -52,6 +52,8 @@ compiler.CompileOptions = new SassCompileOptions
     SourceMapUrlType = SourceMapUrlType.Relative,
     EmbedSources = false,
     EmbedSourceMap = false,
+    Quiet = false,
+    QuietDeps = false
 
 };
 ```
@@ -62,7 +64,8 @@ Also every compile method can accept options. If options passed they override de
 
 Use `CompileAsync` method to get compiled code from file source.
 ```csharp
-var compiledCss = await compiler.CompileAsync("/path/to/source.scss");
+SassCodeCompilationResult result = await compiler.CompileAsync("/path/to/source.scss");
+string code = result.Code;
 ```
 
 ### Compile from code
@@ -71,7 +74,8 @@ Use `CompileCodeAsync` method to get compiled code from string source.
 
 ```csharp
 var sourceSassCode = ".some-class { color: red; }";
-var compiledCss = await compiler.CompileCodeAsync(sourceSassCode);
+SassCodeCompilationResult result = await compiler.CompileCodeAsync(sourceSassCode);
+string code = result.Code;
 ```
 
 ### Compile from file to file
@@ -79,21 +83,25 @@ var compiledCss = await compiler.CompileCodeAsync(sourceSassCode);
 Use `CompileToFileAsync` method to compile source SASS file to CSS.
 
 ```csharp
-var listOfProducedFiles = await compiler.CompileToFileAsync("/path/to/source/source.scss");
+SassFilesCompilationResult result = await compiler.CompileToFileAsync("/path/to/source/source.scss");
+IEnumerable<string> files = result.Files;
+
 ```
 Result file: `/path/to/source/source.css` and `/path/to/source/source.css.map` if Source maps enabled.
 
 Also you can pass custom name for output file.
 
 ```csharp
-var listOfProducedFiles = await compiler.CompileToFileAsync("/path/to/source/source.scss", "dest.css");
+SassFilesCompilationResult result = await compiler.CompileToFileAsync("/path/to/source/source.scss", "dest.css");
+IEnumerable<string> files = result.Files;
 ```
 
 Result file: `/path/to/source/dest.css` and `/path/to/source/dest.css.map` if Source maps enabled.
 
 
 ```csharp
-var listOfProducedFiles = await compiler.CompileToFileAsync("/path/to/source/source.scss", "/path/to/dest/dest.css");
+SassFilesCompilationResult result = await compiler.CompileToFileAsync("/path/to/source/source.scss", "/path/to/dest/dest.css");
+IEnumerable<string> files = result.Files;
 ```
 
 Result file: `/path/to/dest/dest.css` and `/path/to/dest/dest.css.map` if Source maps enabled.
@@ -112,13 +120,15 @@ var sourceFiles = new string[]
     "path/to/source2.sass"
 };
 
-var listOfProducedFiles = await compiler.CompileToFilesAsync(sourceFiles);
+SassFilesCompilationResult result = await compiler.CompileToFilesAsync(sourceFiles);
+IEnumerable<string> files = result.Files;
 ```
 
 All output files will be placed near it source file. Or you can pass additional parameter to specify output directory.
 
 ```csharp
-var listOfProducedFiles = await compiler.CompileToFilesAsync(sourceFiles, "/path/to/dest");
+SassFilesCompilationResult result = await compiler.CompileToFilesAsync(sourceFiles, "/path/to/dest");
+IEnumerable<string> files = result.Files;
 ```
 
 Second accept dictionary where key is source file and value is output file.
@@ -132,10 +142,58 @@ var sourceFiles = new Dictionaty<string, string>
     { "path/to/source4.sass", "path/to/dest/" } // Will be generated source4.css file and placed in path/to/dest/
 }
 
-var listOfProducedFiles = await compiler.CompileToFilesAsync(sourceFiles);
+SassFilesCompilationResult result = await compiler.CompileToFilesAsync(sourceFiles);
+IEnumerable<string> files = result.Files;
 ```
 
 Also you can pass as second parameter output directory and all files without reletive or ablsolute path will be placed in that directory
+
+### Messages
+
+If output contains some Warnings, Deprecation Warnings or Debug messages they are will be presented in result.
+
+```csharp
+SassCodeCompilationResult result = await compiler.CompileAsync("/path/to/source.scss");
+string code = result.Code;
+
+// Warnings
+IEnumerable<SassMessage> warnings = result.Warnings;
+
+foreach (var warning in warnings) {
+    string message = warning.Message;
+    string stackTrace = warning.StackTrace;
+    string rawMessage = warning.RawMessage;
+}
+
+// Deprecation warnings
+IEnumerable<SassDeprecationWarning> deprecationWarnings = result.DeprecationWarnings;
+
+foreach (var deprecationWarning in deprecationWarnings) {
+    string message = deprecationWarning.Message;
+    // Recomendation from Sass
+    string recomendation = deprecationWarning.Recommendation;
+    string stackTrace = deprecationWarning.StackTrace;
+    string rawMessage = deprecationWarning.RawMessage;
+}
+
+// Debug
+IEnumerable<SassMessage> debugMessages = result.Debug;
+
+foreach (var debugMessage in debugMessages) {
+    string message = debugMessage.Message;
+    string stackTrace = debugMessage.StackTrace;
+    string rawMessage = debugMessage.RawMessage;
+}
+```
+
+### Errors
+
+If compilation fails with errors it throws `SassCompileException`. It contains next properties:
+ * `string RawOutput`
+ * `IEnumerable<SassMessage> Errors`
+ * `IEnumerable<SassMessage> Warnings`
+ * `IEnumerable<SassDeprecationWarning> DeprecationWarnings`
+ * `IEnumerable<SassMessage> Debug`
 
 ### Version
 

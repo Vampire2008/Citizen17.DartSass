@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DartSass.Native.linux-arm64
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DartSass.Native.macos-arm64", "DartSass.Native.macos-arm64\DartSass.Native.macos-arm64.csproj", "{FA1886C4-9427-4848-8CC8-50D1D69FA127}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DartSass.Native", "DartSass.Native\DartSass.Native.csproj", "{2EB222BE-6B32-4149-A8E1-9C3203D60BFD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{FA1886C4-9427-4848-8CC8-50D1D69FA127}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA1886C4-9427-4848-8CC8-50D1D69FA127}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA1886C4-9427-4848-8CC8-50D1D69FA127}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EB222BE-6B32-4149-A8E1-9C3203D60BFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EB222BE-6B32-4149-A8E1-9C3203D60BFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EB222BE-6B32-4149-A8E1-9C3203D60BFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EB222BE-6B32-4149-A8E1-9C3203D60BFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

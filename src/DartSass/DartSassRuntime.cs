@@ -1,39 +1,50 @@
 ﻿using System.Diagnostics;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Citizen17.DartSass
+namespace Citizen17.DartSass;
+
+internal class DartSassRuntime
 {
-    internal class DartSassRuntime
+    private readonly string _executable;
+
+    internal DartSassRuntime(string executable)
     {
-        private readonly string _executable;
+        _executable = executable;
+    }
 
-        internal DartSassRuntime(string executable)
+    internal async Task<RuntimeResult> ExecuteAsync(string args, string input, CancellationToken cancellationToken)
+    {
+        using var process = new Process();
+        process.StartInfo.FileName = _executable;
+        process.StartInfo.Arguments = args;
+        process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+        process.StartInfo.RedirectStandardInput = true;
+        process.StartInfo.RedirectStandardOutput = true;
+        process.StartInfo.RedirectStandardError = true;
+        process.StartInfo.StandardOutputEncoding = Encoding.UTF8;
+        process.StartInfo.StandardErrorEncoding = Encoding.UTF8;
+
+        var outputBuilder = new StringBuilder();
+        process.OutputDataReceived += (_, eventArgs) => outputBuilder.AppendLine(eventArgs.Data);
+
+        var errorBuilder = new StringBuilder();
+        process.ErrorDataReceived += (_, eventArgs) => errorBuilder.AppendLine(eventArgs.Data);
+
+        process.Start();
+        if (!string.IsNullOrEmpty(input))
         {
-            _executable = executable;
+            await process.StandardInput.WriteAsync(input);
+            process.StandardInput.Close();
         }
 
-        internal async Task<string> ExecuteAsync(string args, string input, CancellationToken cancellationToken)
-        {
-            using var process = new Process();
-            process.StartInfo.FileName = _executable;
-            process.StartInfo.Arguments = args;
-            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            process.StartInfo.RedirectStandardInput = true;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardError = true;
-            process.Start();
-            if (!string.IsNullOrEmpty(input))
-            {
-                await process.StandardInput.WriteAsync(input);
-                process.StandardInput.Close();
-            }
-            await process.WaitForExitAsync(cancellationToken).ConfigureAwait(false);
-            if (process.ExitCode != 0)
-            {
-                throw new SassException(process.StandardError.ReadToEnd());
-            }
-            return process.StandardOutput.ReadToEnd();
-        }
+        process.BeginOutputReadLine();
+        process.BeginErrorReadLine();
+        await process.WaitForExitAsync(cancellationToken).ConfigureAwait(false);
+        process.CancelOutputRead();
+        process.CancelErrorRead();
+
+        return new(process.ExitCode, outputBuilder.ToString(), errorBuilder.ToString());
     }
 }
