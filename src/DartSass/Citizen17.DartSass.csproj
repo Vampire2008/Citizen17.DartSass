@@ -18,12 +18,13 @@ Dart Sass should be install in system or add one of following packages:
  * DartSass.Native.win-x86
  * DartSass.Native.linux-x64
  * DartSass.Native.linux-arm64
+ * DartSass.Native.linux-arm
  * DartSass.Native.linux-x86
  * DartSass.Native.macos-x64
  * DartSass.Native.macos-arm64</Description>
 		<SignAssembly>False</SignAssembly>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Version>2.0.0</Version>
+		<Version>2.1.0</Version>
 		<PackageReleaseNotes>v 1.1.0:
  * Added support of Linux Arm64 and MacOS arm64
  * Added support of -q flag
@@ -33,6 +34,9 @@ v 2.0.0:
  * Changed result of all methods. See Readme
  * Added parsing warnings, deprecation warnings, debug messages
  * Fixed parsing errors
+
+v 2.1.0
+ * Added support for 32-bit ARM Linux package
 </PackageReleaseNotes>
 	</PropertyGroup>
 

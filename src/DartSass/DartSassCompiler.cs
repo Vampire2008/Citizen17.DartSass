@@ -57,6 +57,10 @@ public class DartSassCompiler
             {
                 pathToExecutable = "./dart-sass.linux-arm64/sass";
             }
+            else if (RuntimeInformation.OSArchitecture == Architecture.Arm)
+            {
+                pathToExecutable = "./dart-sass.linux-arm/sass";
+            }
         }
         else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
         {
