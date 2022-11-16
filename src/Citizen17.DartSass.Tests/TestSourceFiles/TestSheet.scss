@@ -1,0 +1,11 @@
+﻿.my-class {
+    color: red;
+
+    &.active {
+        color: green;
+    }
+
+    .text {
+        text-align: right;
+    }
+}

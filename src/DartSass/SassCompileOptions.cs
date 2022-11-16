@@ -135,9 +135,9 @@ public class SassCompileOptions
                     continue;
                 }
 
-                sb.Append("-I ");
+                sb.Append("-I \"");
                 sb.Append(path);
-                sb.Append(' ');
+                sb.Append("\" ");
             }
         }
 
