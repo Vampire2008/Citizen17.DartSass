@@ -100,7 +100,11 @@ public class DartSassCompiler
     /// <returns>Compiled CSS code</returns>
     public async Task<SassCodeCompilationResult> CompileAsync(string inputFilePath, SassCompileOptions options = null, CancellationToken cancellationToken = default)
     {
-        var args = options?.BuildArgs(true) ?? CompileOptions?.BuildArgs(true);
+        EnsureInputFile(inputFilePath);
+
+        options ??= CompileOptions;
+
+        var args = options?.BuildArgs(true);
         var result = await _runtime.ExecuteAsync($"{inputFilePath} {args}", null, cancellationToken).ConfigureAwait(false);
 
         var parsed = ParseStdErr(result.StdErr);
@@ -130,10 +134,7 @@ public class DartSassCompiler
     /// <exception cref="ArgumentNullException">Throws if inputFilePath is empty</exception>
     public Task<SassFilesCompilationResult> CompileToFileAsync(string inputFilePath, string outputFilePath = null, SassCompileOptions options = null, CancellationToken cancellationToken = default)
     {
-        if (string.IsNullOrWhiteSpace(inputFilePath))
-        {
-            throw new ArgumentNullException(nameof(inputFilePath));
-        }
+        EnsureInputFile(inputFilePath);
 
         return CompileToFilesAsync(new Dictionary<string, string> { { inputFilePath, outputFilePath } }, null, options, cancellationToken);
     }
@@ -173,9 +174,15 @@ public class DartSassCompiler
         {
             throw new ArgumentNullException(nameof(files));
         }
+
         if (!files.Any())
         {
             return Task.FromResult(new SassFilesCompilationResult());
+        }
+
+        foreach (var file in files)
+        {
+            EnsureInputFile(file.Key);
         }
 
         return CompileToFilesInternalAsync(files, outputDir, options, cancellationToken);
@@ -424,5 +431,23 @@ public class DartSassCompiler
 
         }
         return new(message, stackTraceBuilder.ToString(), rawMessageBuilder.ToString());
+    }
+
+    private static void EnsureInputFile(string path)
+    {
+        if (path == null)
+        {
+            throw new ArgumentNullException(nameof(path));
+        }
+
+        if (string.IsNullOrWhiteSpace(path))
+        {
+            throw new ArgumentException("Input file cannot be empty");
+        }
+
+        if (!File.Exists(path))
+        {
+            throw new FileNotFoundException("Source file not found", path);
+        }
     }
 }

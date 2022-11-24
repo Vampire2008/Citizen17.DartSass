@@ -22,18 +22,12 @@ namespace Citizen17.DartSass.Tests
         [DataRow(null, false, true, null)]
 
         [DataRow(true, null, false, true)]
-        [DataRow(true, null, true, null)]
         [DataRow(true, true, false, true)]
         [DataRow(true, true, true, true)]
         [DataRow(true, false, false, true)]
-        [DataRow(true, false, true, null)]
 
         [DataRow(false, null, false, false)]
         [DataRow(false, null, true, false)]
-        [DataRow(false, true, false, false)]
-        [DataRow(false, true, true, false)]
-        [DataRow(false, false, false, false)]
-        [DataRow(false, false, true, false)]
         public void GenerateSourceMapTest(bool? generateSourceMap, bool? embedSourceMap, bool useStdout, bool? expectedPresence)
         {
             var testOptions = new SassCompileOptions();
@@ -56,6 +50,26 @@ namespace Citizen17.DartSass.Tests
                     Assert.IsFalse(result.Contains("--no-source-map"), "Result contains deactivate parameter");
                     break;
             }
+        }
+
+        [TestMethod]
+        [DataRow(true, null, true)]
+        [DataRow(true, false, true)]
+        [DataRow(false, true, false)]
+        [DataRow(false, true, true)]
+        [DataRow(false, false, false)]
+        [DataRow(false, false, true)]
+        public void GenerateSourceMapWrongCombinationTest(bool? generateSourceMap, bool? embedSourceMap, bool useStdout)
+        {
+            var testOptions = new SassCompileOptions();
+            testOptions.GenerateSourceMap = generateSourceMap;
+            testOptions.EmbedSourceMap = embedSourceMap;
+
+            var exception = Assert.ThrowsException<SassCompileException>(() => testOptions.BuildArgs(useStdout));
+            Assert.IsNotNull(exception.Errors.Single());
+            Assert.IsFalse(exception.Warnings.Any());
+            Assert.IsFalse(exception.DeprecationWarnings.Any());
+            Assert.IsFalse(exception.Debug.Any());
         }
 
         [TestMethod]
@@ -89,11 +103,9 @@ namespace Citizen17.DartSass.Tests
         [DataRow(null, false, true, null)]
 
         [DataRow(true, null, false, true)]
-        [DataRow(true, null, true, null)]
         [DataRow(true, true, false, true)]
         [DataRow(true, true, true, true)]
         [DataRow(true, false, false, true)]
-        [DataRow(true, false, true, null)]
 
         [DataRow(false, null, false, false)]
         [DataRow(false, null, true, false)]
@@ -126,13 +138,51 @@ namespace Citizen17.DartSass.Tests
         }
 
         [TestMethod]
-        [DataRow(null, null)]
-        [DataRow(true, true)]
+        [DataRow(null)]
+        [DataRow(false)]
+        public void EmbedSourcesWithWrongCombinationTest(bool? embedSourceMap)
+        {
+            var testOptions = new SassCompileOptions();
+            testOptions.EmbedSources = true;
+            testOptions.EmbedSourceMap = embedSourceMap;
+
+            var exception = Assert.ThrowsException<SassCompileException>(() => testOptions.BuildArgs(true));
+            Assert.IsNotNull(exception.Errors.Single());
+            Assert.IsFalse(exception.Warnings.Any());
+            Assert.IsFalse(exception.DeprecationWarnings.Any());
+            Assert.IsFalse(exception.Debug.Any());
+        }
+
+        [TestMethod]
         [DataRow(false, false)]
-        public void EmbedSourceMapTest(bool? embedSourceMap, bool? expectedPresence)
+        [DataRow(false, true)]
+        [DataRow(true, false)]
+        [DataRow(true, true)]
+        public void EmbedSourcesWithDisabledGenerationSourceMapsTest(bool embedSources, bool useStdout)
+        {
+            var testOptions = new SassCompileOptions();
+            testOptions.EmbedSources = embedSources;
+            testOptions.GenerateSourceMap = false;
+
+            var exception = Assert.ThrowsException<SassCompileException>(() => testOptions.BuildArgs(useStdout));
+            Assert.IsNotNull(exception.Errors.Single());
+            Assert.IsFalse(exception.Warnings.Any());
+            Assert.IsFalse(exception.DeprecationWarnings.Any());
+            Assert.IsFalse(exception.Debug.Any());
+        }
+
+        [TestMethod]
+        [DataRow(null, null, null)]
+        [DataRow(true, null, true)]
+        [DataRow(false, null, false)]
+        [DataRow(null, true, null)]
+        [DataRow(true, true, true)]
+        [DataRow(false, true, false)]
+        public void EmbedSourceMapTest(bool? embedSourceMap, bool? generateSourceMap, bool? expectedPresence)
         {
             var testOptions = new SassCompileOptions();
             testOptions.EmbedSourceMap = embedSourceMap;
+            testOptions.GenerateSourceMap = generateSourceMap;
 
             var result = testOptions.BuildArgs(false);
             switch (expectedPresence)
@@ -150,6 +200,23 @@ namespace Citizen17.DartSass.Tests
                     Assert.IsFalse(result.Contains("--no-embed-source-map"), "Result contains deactivate parameter");
                     break;
             }
+        }
+
+        [TestMethod]
+        [DataRow(true)]
+        [DataRow(false)]
+        public void EmbedSourceMapWithNoSourceMapTest(bool embedSourceMap)
+        {
+            var testOptions = new SassCompileOptions();
+            testOptions.EmbedSourceMap = embedSourceMap;
+            testOptions.GenerateSourceMap = false;
+
+
+            var exception = Assert.ThrowsException<SassCompileException>(() => testOptions.BuildArgs(false));
+            Assert.IsNotNull(exception.Errors.Single());
+            Assert.IsFalse(exception.Warnings.Any());
+            Assert.IsFalse(exception.DeprecationWarnings.Any());
+            Assert.IsFalse(exception.Debug.Any());
         }
 
         [TestMethod]

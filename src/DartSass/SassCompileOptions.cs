@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Citizen17.DartSass;
@@ -75,6 +76,18 @@ public class SassCompileOptions
                 {
                     sb.Append("--source-map ");
                 }
+                else
+                {
+                    throw new SassCompileException(new[] {
+                            new SassMessage($"When compiling to string, {nameof(GenerateSourceMap)} requires {nameof(EmbedSourceMap)} to be set to true.",
+                        null,
+                        "When printing to stdout, --source-map requires --embed-source-map.")
+                        },
+                        "When printing to stdout, --source-map requires --embed-source-map.",
+                        Enumerable.Empty<SassMessage>(), 
+                        Enumerable.Empty<SassDeprecationWarning>(),
+                        Enumerable.Empty<SassMessage>());
+                }
             }
             else
             {
@@ -91,11 +104,35 @@ public class SassCompileOptions
 
         if (EmbedSources.HasValue)
         {
+            if (GenerateSourceMap.HasValue && !GenerateSourceMap.Value)
+            {
+                throw new SassCompileException(new[] {
+                        new SassMessage($"{nameof(EmbedSources)} isn't allowed when {nameof(GenerateSourceMap)} is set to false.",
+                            null,
+                            "--embed-sources isn't allowed with --no-source-map")
+                    },
+                    "--embed-sources isn't allowed with --no-source-map",
+                    Enumerable.Empty<SassMessage>(),
+                    Enumerable.Empty<SassDeprecationWarning>(),
+                    Enumerable.Empty<SassMessage>());
+            }
             if (EmbedSources.Value)
             {
                 if (EmbedSourceMap.HasValue && EmbedSourceMap.Value || !outputToSdtout)
                 {
                     sb.Append("--embed-sources ");
+                }
+                else
+                {
+                    throw new SassCompileException(new[] {
+                            new SassMessage($"When compiling to string, {nameof(EmbedSources)} requires {nameof(EmbedSourceMap)} to be set to true.",
+                        null,
+                        "When printing to stdout, --source-map requires --embed-source-map.")
+                        },
+                        "When printing to stdout, --source-map requires --embed-source-map.",
+                        Enumerable.Empty<SassMessage>(),
+                        Enumerable.Empty<SassDeprecationWarning>(),
+                        Enumerable.Empty<SassMessage>());
                 }
             }
             else
@@ -106,7 +143,22 @@ public class SassCompileOptions
 
         if (EmbedSourceMap.HasValue)
         {
-            sb.Append(EmbedSourceMap.Value ? "--embed-source-map " : "--no-embed-source-map ");
+            if (!GenerateSourceMap.HasValue || GenerateSourceMap.Value)
+            {
+                sb.Append(EmbedSourceMap.Value ? "--embed-source-map " : "--no-embed-source-map ");
+            }
+            else
+            {
+                throw new SassCompileException(new[] {
+                        new SassMessage($"{nameof(EmbedSourceMap)} isn't allowed when {nameof(GenerateSourceMap)} is set to false. Now options is ignored",
+                    null,
+                    "--embed-source-map isn't allowed with --no-source-map.")
+                    },
+                    "--embed-source-map isn't allowed with --no-source-map.",
+                    Enumerable.Empty<SassMessage>(),
+                    Enumerable.Empty<SassDeprecationWarning>(),
+                    Enumerable.Empty<SassMessage>());
+            }
         }
 
         if (StyleType.HasValue)
@@ -153,5 +205,4 @@ public class SassCompileOptions
 
         return sb.ToString();
     }
-
 }

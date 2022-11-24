@@ -9,7 +9,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+		<TargetFrameworks>net6.0;net7.0</TargetFrameworks>
 		<LangVersion>latest</LangVersion>
 		<Authors>Mikhail Kislenko</Authors>
 		<Description>Library for compiling Sass files using Dart Sass runtime.
