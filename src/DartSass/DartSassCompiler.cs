@@ -22,14 +22,25 @@ public class DartSassCompiler
     /// <summary>
     /// Creates compiler instance
     /// </summary>
+    public DartSassCompiler() : this(null, true) { }
+
+    /// <summary>
+    /// Creates compiler instance
+    /// </summary>
     /// <param name="pathToExecutable">Path to Dart Sass executable. If not passed tries to find in dependencies or in environment variable PATH</param>
+    /// <param name="useFallbackToNugetOrSystem">Instruct to use Dart Sass from Nuget or from Path if <paramref name="pathToExecutable"/> is not exists</param>Lf
     /// <exception cref="ArgumentException">Throws if Dart Sass executable not found.</exception>
-    public DartSassCompiler(string pathToExecutable = null)
+    public DartSassCompiler(string pathToExecutable, bool useFallbackToNugetOrSystem = false)
     {
         if (File.Exists(pathToExecutable))
         {
             _runtime = new(pathToExecutable);
             return;
+        }
+
+        if (!useFallbackToNugetOrSystem)
+        {
+            throw new ArgumentException(Messages.ErrorSassNotFound);
         }
 
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -84,7 +95,7 @@ public class DartSassCompiler
 
             if (string.IsNullOrEmpty(pathToExecutable))
             {
-                throw new ArgumentException("Sass not found");
+                throw new ArgumentException(Messages.ErrorSassNotFound);
             }
         }
 
@@ -197,7 +208,7 @@ public class DartSassCompiler
         {
             if (string.IsNullOrWhiteSpace(pair.Key))
             {
-                throw new ArgumentException("Input file cannot be empty", nameof(files));
+                throw new ArgumentException(Messages.ErrorEmptyFiePath, nameof(files));
             }
             var outputFile = pair.Value;
             if (string.IsNullOrWhiteSpace(outputFile))
@@ -442,12 +453,12 @@ public class DartSassCompiler
 
         if (string.IsNullOrWhiteSpace(path))
         {
-            throw new ArgumentException("Input file cannot be empty");
+            throw new ArgumentException(Messages.ErrorEmptyFiePath);
         }
 
         if (!File.Exists(path))
         {
-            throw new FileNotFoundException("Source file not found", path);
+            throw new FileNotFoundException(Messages.ErrorNotFound, path);
         }
     }
 }

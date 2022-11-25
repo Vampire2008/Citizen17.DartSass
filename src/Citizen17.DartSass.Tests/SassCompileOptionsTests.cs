@@ -14,7 +14,6 @@ namespace Citizen17.DartSass.Tests
 
         [TestMethod]
         [DataRow(null, null, false, null)]
-        [DataRow(null, null, false, null)]
         [DataRow(null, null, true, null)]
         [DataRow(null, true, false, null)]
         [DataRow(null, true, true, null)]
@@ -53,35 +52,81 @@ namespace Citizen17.DartSass.Tests
         }
 
         [TestMethod]
-        [DataRow(true, null, true)]
-        [DataRow(true, false, true)]
-        [DataRow(false, true, false)]
-        [DataRow(false, true, true)]
-        [DataRow(false, false, false)]
-        [DataRow(false, false, true)]
-        public void GenerateSourceMapWrongCombinationTest(bool? generateSourceMap, bool? embedSourceMap, bool useStdout)
+        [DataRow(true, null)]
+        [DataRow(true, false)]
+        public void GenerateSourceMapWrongCombinationWithStdOutTest(bool? generateSourceMap, bool? embedSourceMap)
         {
             var testOptions = new SassCompileOptions();
             testOptions.GenerateSourceMap = generateSourceMap;
             testOptions.EmbedSourceMap = embedSourceMap;
 
-            var exception = Assert.ThrowsException<SassCompileException>(() => testOptions.BuildArgs(useStdout));
-            Assert.IsNotNull(exception.Errors.Single());
+            var exception = Assert.ThrowsException<SassCompileException>(() => testOptions.BuildArgs(true));
+            Assert.AreEqual(Messages.ErrorCombineGenerateSourceMapAndFalseEmbed, exception.Message);
+
+            var error = exception.Errors.Single();
+            Assert.IsNotNull(error);
+            Assert.AreEqual(Messages.ErrorCombineGenerateSourceMapAndFalseEmbed, error.Message);
+            Assert.IsNull(error.StackTrace);
+            Assert.AreEqual(Messages.RawErrorCombineGenerateSourceMapAndFalseEmbed, error.RawMessage);
+            
             Assert.IsFalse(exception.Warnings.Any());
             Assert.IsFalse(exception.DeprecationWarnings.Any());
             Assert.IsFalse(exception.Debug.Any());
         }
 
         [TestMethod]
-        [DataRow(null, false)]
-        [DataRow(SourceMapUrlType.Absolute, true)]
-        [DataRow(SourceMapUrlType.Relative, true)]
-        public void SourceMapUrlTypeTest(SourceMapUrlType? value, bool expectedPresence)
+        [DataRow(false, true, false)]
+        [DataRow(false, true, true)]
+        [DataRow(false, false, false)]
+        [DataRow(false, false, true)]
+        public void EmbedSourceMapWithSourceMapSetToFalseTest(bool? generateSourceMap, bool? embedSourceMap, bool useStdout)
         {
             var testOptions = new SassCompileOptions();
+            testOptions.GenerateSourceMap = generateSourceMap;
+            testOptions.EmbedSourceMap = embedSourceMap;
+
+            var exception = Assert.ThrowsException<SassCompileException>(() => testOptions.BuildArgs(useStdout));
+            Assert.AreEqual(Messages.ErrorCombineEmbedSourceMapAndFalseSourceMaps, exception.Message);
+
+            var error = exception.Errors.Single();
+            Assert.IsNotNull(error);
+            Assert.AreEqual(Messages.ErrorCombineEmbedSourceMapAndFalseSourceMaps, error.Message);
+            Assert.IsNull(error.StackTrace);
+            Assert.AreEqual(Messages.RawErrorCombineEmbedSourceMapAndFalseSourceMaps, error.RawMessage);
+
+            Assert.IsFalse(exception.Warnings.Any());
+            Assert.IsFalse(exception.DeprecationWarnings.Any());
+            Assert.IsFalse(exception.Debug.Any());
+        }
+
+        [TestMethod]
+        [DataRow(null, null, false, false)]
+        [DataRow(null, null, true, false)]
+        [DataRow(null, false, false, false)]
+        [DataRow(null, false, true, false)]
+        [DataRow(null,true, false, false)]
+        [DataRow(null, true, true, false)]
+
+        [DataRow(SourceMapUrlType.Absolute, null, false, true)]
+        [DataRow(SourceMapUrlType.Absolute, null, true, true)]
+        [DataRow(SourceMapUrlType.Absolute, true, false, true)]
+        [DataRow(SourceMapUrlType.Absolute, true, true, true)]
+
+        [DataRow(SourceMapUrlType.Relative, null, false, true)]
+        //[DataRow(SourceMapUrlType.Relative, null, true, true)]
+        [DataRow(SourceMapUrlType.Relative, true, false, true)]
+        //[DataRow(SourceMapUrlType.Relative, true, true, true)]
+        public void SourceMapUrlTypeTest(SourceMapUrlType? value, bool? generateSourceMaps, bool useStdout, bool expectedPresence)
+        {
+            var testOptions = new SassCompileOptions();
+            testOptions.GenerateSourceMap = generateSourceMaps;
+            if ((generateSourceMaps ?? false) && useStdout)
+            {
+                testOptions.EmbedSourceMap = true;
+            }
             testOptions.SourceMapUrlType = value;
 
-            var result = testOptions.BuildArgs(false);
+            var result = testOptions.BuildArgs(useStdout);
 
             if (expectedPresence)
             {
@@ -91,6 +136,55 @@ namespace Citizen17.DartSass.Tests
             {
                 Assert.IsFalse(result.Contains("--source-map-urls"));
             }
+        }
+
+        [TestMethod]
+        [DataRow(SourceMapUrlType.Absolute, false, false)]
+        [DataRow(SourceMapUrlType.Absolute, false, true)]
+        [DataRow(SourceMapUrlType.Relative, false, false)]
+        [DataRow(SourceMapUrlType.Relative, false, true)]
+        public void SourceMapUrlTypeWithFalseSourceMapsTest(SourceMapUrlType? value, bool? generateSourceMaps, bool useStdout)
+        {
+            var testOptions = new SassCompileOptions();
+            testOptions.SourceMapUrlType = value;
+            testOptions.GenerateSourceMap = generateSourceMaps;
+            if ((generateSourceMaps ?? false) && useStdout)
+            {
+                testOptions.EmbedSourceMap = true;
+            }
+
+            var exception = Assert.ThrowsException<SassCompileException>(() => testOptions.BuildArgs(useStdout));
+            Assert.AreEqual(Messages.ErrorCombineSourceMapUrlTypeAndFalseSourceMaps, exception.Message);
+
+            var error = exception.Errors.Single();
+            Assert.IsNotNull(error);
+            Assert.AreEqual(Messages.ErrorCombineSourceMapUrlTypeAndFalseSourceMaps, error.Message);
+            Assert.IsNull(error.StackTrace);
+            Assert.AreEqual(Messages.RawErrorCombineSourceMapUrlTypeAndFalseSourceMaps, error.RawMessage);
+
+            Assert.IsFalse(exception.Warnings.Any());
+            Assert.IsFalse(exception.DeprecationWarnings.Any());
+            Assert.IsFalse(exception.Debug.Any());
+        }
+
+        [TestMethod]
+        public void RelativeSourceMapUrlWithPrintToStdOutTest()
+        {
+            var testOptions = new SassCompileOptions();
+            testOptions.SourceMapUrlType = SourceMapUrlType.Relative;
+
+            var exception = Assert.ThrowsException<SassCompileException>(() => testOptions.BuildArgs(true));
+            Assert.AreEqual(Messages.ErrorCombineSourceMapUrlRelativeWithStdOut, exception.Message);
+
+            var error = exception.Errors.Single();
+            Assert.IsNotNull(error);
+            Assert.AreEqual(Messages.ErrorCombineSourceMapUrlRelativeWithStdOut, error.Message);
+            Assert.IsNull(error.StackTrace);
+            Assert.AreEqual(Messages.RawErrorCombineSourceMapUrlRelativeWithStdOut, error.RawMessage);
+
+            Assert.IsFalse(exception.Warnings.Any());
+            Assert.IsFalse(exception.DeprecationWarnings.Any());
+            Assert.IsFalse(exception.Debug.Any());
         }
 
         [TestMethod]

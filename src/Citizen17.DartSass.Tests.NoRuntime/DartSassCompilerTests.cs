@@ -6,7 +6,8 @@ namespace Citizen17.DartSass.Tests.NoRuntime
         [TestMethod]
         public void CreateDartSassCompilerWithNoRuntime()
         {
-            Assert.ThrowsException<ArgumentException>(() => new DartSassCompiler(), "Runtime presents on computer in PATH");
+            var exception = Assert.ThrowsException<ArgumentException>(() => new DartSassCompiler(), "Runtime presents on computer in PATH");
+            Assert.AreEqual(Messages.ErrorSassNotFound, exception.Message);
         }
     }
 }

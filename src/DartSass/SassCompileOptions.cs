@@ -79,11 +79,11 @@ public class SassCompileOptions
                 else
                 {
                     throw new SassCompileException(new[] {
-                            new SassMessage($"When compiling to string, {nameof(GenerateSourceMap)} requires {nameof(EmbedSourceMap)} to be set to true.",
+                            new SassMessage(Messages.ErrorCombineGenerateSourceMapAndFalseEmbed,
                         null,
-                        "When printing to stdout, --source-map requires --embed-source-map.")
+                        Messages.RawErrorCombineGenerateSourceMapAndFalseEmbed)
                         },
-                        "When printing to stdout, --source-map requires --embed-source-map.",
+                        Messages.RawErrorCombineGenerateSourceMapAndFalseEmbed,
                         Enumerable.Empty<SassMessage>(), 
                         Enumerable.Empty<SassDeprecationWarning>(),
                         Enumerable.Empty<SassMessage>());
@@ -97,6 +97,31 @@ public class SassCompileOptions
 
         if (SourceMapUrlType.HasValue)
         {
+            if (GenerateSourceMap.HasValue && !GenerateSourceMap.Value)
+            {
+                throw new SassCompileException(new[] {
+                        new SassMessage(Messages.ErrorCombineSourceMapUrlTypeAndFalseSourceMaps,
+                            null,
+                            Messages.RawErrorCombineSourceMapUrlTypeAndFalseSourceMaps)
+                    },
+                    Messages.RawErrorCombineSourceMapUrlTypeAndFalseSourceMaps,
+                    Enumerable.Empty<SassMessage>(),
+                    Enumerable.Empty<SassDeprecationWarning>(),
+                    Enumerable.Empty<SassMessage>());
+            }
+
+            if (SourceMapUrlType.Value == DartSass.SourceMapUrlType.Relative && outputToSdtout)
+            {
+                throw new SassCompileException(new[] {
+                        new SassMessage(Messages.ErrorCombineSourceMapUrlRelativeWithStdOut,
+                            null,
+                            Messages.RawErrorCombineSourceMapUrlRelativeWithStdOut)
+                    },
+                    Messages.RawErrorCombineSourceMapUrlRelativeWithStdOut,
+                    Enumerable.Empty<SassMessage>(),
+                    Enumerable.Empty<SassDeprecationWarning>(),
+                    Enumerable.Empty<SassMessage>());
+            }
             sb.Append("--source-map-urls ");
             sb.Append(SourceMapUrlType.Value.ToString().ToLowerInvariant());
             sb.Append(' ');
@@ -107,11 +132,11 @@ public class SassCompileOptions
             if (GenerateSourceMap.HasValue && !GenerateSourceMap.Value)
             {
                 throw new SassCompileException(new[] {
-                        new SassMessage($"{nameof(EmbedSources)} isn't allowed when {nameof(GenerateSourceMap)} is set to false.",
+                        new SassMessage(Messages.ErrorCombineEmbedSourcesAndFalseSourceMaps,
                             null,
-                            "--embed-sources isn't allowed with --no-source-map")
+                            Messages.RawErrorCombineEmbedSourcesAndFalseSourceMaps)
                     },
-                    "--embed-sources isn't allowed with --no-source-map",
+                    Messages.RawErrorCombineEmbedSourcesAndFalseSourceMaps,
                     Enumerable.Empty<SassMessage>(),
                     Enumerable.Empty<SassDeprecationWarning>(),
                     Enumerable.Empty<SassMessage>());
@@ -125,11 +150,11 @@ public class SassCompileOptions
                 else
                 {
                     throw new SassCompileException(new[] {
-                            new SassMessage($"When compiling to string, {nameof(EmbedSources)} requires {nameof(EmbedSourceMap)} to be set to true.",
+                            new SassMessage(Messages.ErrorEmbedSourcesWithoutEmbedSourceMap,
                         null,
-                        "When printing to stdout, --source-map requires --embed-source-map.")
+                        Messages.RawErrorEmbedSourcesWithoutEmbedSourceMap)
                         },
-                        "When printing to stdout, --source-map requires --embed-source-map.",
+                        Messages.RawErrorEmbedSourcesWithoutEmbedSourceMap,
                         Enumerable.Empty<SassMessage>(),
                         Enumerable.Empty<SassDeprecationWarning>(),
                         Enumerable.Empty<SassMessage>());
@@ -150,11 +175,11 @@ public class SassCompileOptions
             else
             {
                 throw new SassCompileException(new[] {
-                        new SassMessage($"{nameof(EmbedSourceMap)} isn't allowed when {nameof(GenerateSourceMap)} is set to false. Now options is ignored",
+                        new SassMessage(Messages.ErrorCombineEmbedSourceMapAndFalseSourceMaps,
                     null,
-                    "--embed-source-map isn't allowed with --no-source-map.")
+                    Messages.RawErrorCombineEmbedSourceMapAndFalseSourceMaps)
                     },
-                    "--embed-source-map isn't allowed with --no-source-map.",
+                    Messages.RawErrorCombineEmbedSourceMapAndFalseSourceMaps,
                     Enumerable.Empty<SassMessage>(),
                     Enumerable.Empty<SassDeprecationWarning>(),
                     Enumerable.Empty<SassMessage>());

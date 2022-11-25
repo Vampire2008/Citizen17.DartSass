@@ -12,7 +12,21 @@ public class DartSassCompilerTests
     [TestMethod]
     public void CreateWithWrongPathTest()
     {
-        Assert.IsNotNull(new DartSassCompiler("/not/real/path.exe"));
+        var exception = Assert.ThrowsException<ArgumentException>(() => new DartSassCompiler("/not/real/path.exe"));
+        Assert.AreEqual(Messages.ErrorSassNotFound, exception.Message);
+    }
+
+    [TestMethod]
+    public void CreateWithWrongPathAndUseFallbackFalseTest()
+    {
+        var exception = Assert.ThrowsException<ArgumentException>(() => new DartSassCompiler("/not/real/path.exe", false));
+        Assert.AreEqual(Messages.ErrorSassNotFound, exception.Message);
+    }
+
+    [TestMethod]
+    public void CreateWithWrongPathAndUseFallbackTest()
+    {
+        Assert.IsNotNull(new DartSassCompiler("/not/real/path.exe", true));
     }
 
     [TestMethod]
@@ -25,9 +39,9 @@ public class DartSassCompilerTests
         var result = await compiler.CompileAsync(file.FileName);
 
         Assert.IsNotNull(result.Code);
-        Assert.IsTrue(!result.Debug.Any());
-        Assert.IsTrue(!result.DeprecationWarnings.Any());
-        Assert.IsTrue(!result.Warnings.Any());
+        Assert.IsFalse(result.Debug.Any());
+        Assert.IsFalse(result.DeprecationWarnings.Any());
+        Assert.IsFalse(result.Warnings.Any());
         Assert.AreEqual(ScssTestFiles.ExpectedResults[file], result.Code.Trim());
     }
 
@@ -65,9 +79,9 @@ public class DartSassCompilerTests
         var result = await compiler.CompileAsync(file.FileName, new());
 
         Assert.IsNotNull(result.Code);
-        Assert.IsTrue(!result.Debug.Any());
-        Assert.IsTrue(!result.DeprecationWarnings.Any());
-        Assert.IsTrue(!result.Warnings.Any());
+        Assert.IsFalse(result.Debug.Any());
+        Assert.IsFalse(result.DeprecationWarnings.Any());
+        Assert.IsFalse(result.Warnings.Any());
         
         Assert.AreEqual(ScssTestFiles.ExpectedResults[file], result.Code.Trim());
     }
@@ -82,9 +96,9 @@ public class DartSassCompilerTests
         var result = await compiler.CompileAsync(file.FileName, null);
 
         Assert.IsNotNull(result.Code);
-        Assert.IsTrue(!result.Debug.Any());
-        Assert.IsTrue(!result.DeprecationWarnings.Any());
-        Assert.IsTrue(!result.Warnings.Any());
+        Assert.IsFalse(result.Debug.Any());
+        Assert.IsFalse(result.DeprecationWarnings.Any());
+        Assert.IsFalse(result.Warnings.Any());
         Assert.AreEqual(ScssTestFiles.ExpectedResults[file], result.Code.Trim());
     }
 
@@ -107,9 +121,9 @@ public class DartSassCompilerTests
         var result = await compiler.CompileAsync(file.FileName, testOptions);
         
         Assert.IsNotNull(result.Code);
-        Assert.IsTrue(!result.Debug.Any());
-        Assert.IsTrue(!result.DeprecationWarnings.Any());
-        Assert.IsTrue(!result.Warnings.Any());
+        Assert.IsFalse(result.Debug.Any());
+        Assert.IsFalse(result.DeprecationWarnings.Any());
+        Assert.IsFalse(result.Warnings.Any());
 
         Assert.AreEqual(ScssTestFiles.ExpectedResults[file], result.Code.Trim());
     }
@@ -119,7 +133,7 @@ public class DartSassCompilerTests
     [DataRow(true, false)]
     [DataRow(false, true)]
     [DataRow(false, false)]
-    public async Task CompileWithGenerateSourceMapWithWarningTest(bool? generateSourceMap, bool? embedSourceMap)
+    public async Task CompileWithGenerateSourceMapWithIncompatibleParametersTest(bool? generateSourceMap, bool? embedSourceMap)
     {
         var testOptions = new SassCompileOptions();
         testOptions.GenerateSourceMap = generateSourceMap;
@@ -127,13 +141,13 @@ public class DartSassCompilerTests
 
         var compiler = new DartSassCompiler();
         var file = new TestFileKey(ScssTestFiles.TestSheetScss, false);
-        var result = await compiler.CompileAsync(file.FileName, testOptions);
-
-        Assert.IsNotNull(result.Code);
-        Assert.IsTrue(!result.Debug.Any());
-        Assert.IsTrue(!result.DeprecationWarnings.Any());
-        Assert.IsTrue(result.Warnings.Any());
-
-        Assert.AreEqual(ScssTestFiles.ExpectedResults[file], result.Code.Trim());
+        var exception = await Assert.ThrowsExceptionAsync<SassCompileException>(() => compiler.CompileAsync(file.FileName, testOptions));
+        
+        Assert.IsTrue(exception.Errors.Count() == 1);
+        Assert.IsFalse(exception.Debug.Any());
+        Assert.IsFalse(exception.DeprecationWarnings.Any());
+        Assert.IsFalse(exception.Warnings.Any());
     }
+
+    //public async Task CompileWithChan
 }

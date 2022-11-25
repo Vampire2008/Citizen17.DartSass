@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Runtime.Serialization;
 
 namespace Citizen17.DartSass;
@@ -14,6 +16,7 @@ public class SassCompileException : Exception
     public IEnumerable<SassMessage> Debug { get; }
 
     public SassCompileException(IEnumerable<SassMessage> errors, string rawOutput, IEnumerable<SassMessage> warnings, IEnumerable<SassDeprecationWarning> deprecationWarnings, IEnumerable<SassMessage> debug)
+        : base(errors.Count() == 1 ? errors.Single().Message : Messages.MultipleErrorsOccurred)
     {
         Errors = errors;
         RawOutput = rawOutput;
