@@ -6,5 +6,15 @@
 			<Link>dart-sass.linux-x64/sass</Link>
 			<Visible>False</Visible>
 		</None>
+		<None Include="$(MSBuildThisFileDirectory)../runtimes/dart-sass.linux-x64/src/dart/dart">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<Link>dart-sass.linux-x64/src/dart</Link>
+			<Visible>False</Visible>
+		</None>
+		<None Include="$(MSBuildThisFileDirectory)../runtimes/dart-sass.linux-x64/src/sass.snapshot">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<Link>dart-sass.linux-x64/src/sass.snapshot</Link>
+			<Visible>False</Visible>
+		</None>
 	</ItemGroup>
 </Project>

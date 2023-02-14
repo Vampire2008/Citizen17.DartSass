@@ -19,6 +19,16 @@
 			<PackagePath>runtimes/dart-sass.linux-arm/sass</PackagePath>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
+		<None Include="..\..\dart-sass\linux-arm\dart-sass\src\dart" Link="dart-sass.linux-arm\src\dart">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.linux-arm/src/dart</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\dart-sass\linux-arm\dart-sass\src\sass.snapshot" Link="dart-sass.linux-arm\src\sass.snapshot">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.linux-arm/src/sass.snapshot</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 
 </Project>
