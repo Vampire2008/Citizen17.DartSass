@@ -2,7 +2,9 @@ $DartSassVersion = Select-Xml -Path .\build\runtime.props -XPath /Project/Proper
 $DownloadUrl = "https://github.com/sass/dart-sass/releases/download/$($DartSassVersion)/"
 $TempDir = "./dart-sass/temp"
 
-Remove-Item "./dart-sass" -Recurse
+if (Test-Path "./dart-sass") {
+	Remove-Item "./dart-sass" -Recurse
+}
 New-Item -ItemType Directory -Force $TempDir
 
 try {
