@@ -22,4 +22,4 @@ jobs:
         run: dotnet pack ./src/DartSass.sln -o ./nuget -c Release 
 
       - name: Upload
-        run: dotnet nuget push "./nuget/*" -k ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json
+        run: dotnet nuget push "./nuget/*" -k ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
