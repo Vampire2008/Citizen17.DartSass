@@ -14,17 +14,17 @@
 			<PackagePath>build\DartSass.Native.win-x86.props</PackagePath>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Include="..\..\dart-sass\win-ia32\dart-sass\sass.bat" Link="dart-sass.win-x86\sass.bat">
+		<None Include="..\..\dart-sass\windows-ia32\dart-sass\sass.bat" Link="dart-sass.win-x86\sass.bat">
 			<Pack>true</Pack>
 			<PackagePath>runtimes/dart-sass.win-x86/sass.bat</PackagePath>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Include="..\..\dart-sass\win-ia32\dart-sass\src\dart.exe" Link="dart-sass.win-x86\src\dart.exe">
+		<None Include="..\..\dart-sass\windows-ia32\dart-sass\src\dart.exe" Link="dart-sass.win-x86\src\dart.exe">
 			<Pack>true</Pack>
 			<PackagePath>runtimes/dart-sass.win-x86/src/dart.exe</PackagePath>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Include="..\..\dart-sass\win-ia32\dart-sass\src\sass.snapshot" Link="dart-sass.win-x86\src\sass.snapshot">
+		<None Include="..\..\dart-sass\windows-ia32\dart-sass\src\sass.snapshot" Link="dart-sass.win-x86\src\sass.snapshot">
 			<Pack>true</Pack>
 			<PackagePath>runtimes/dart-sass.win-x86/src/sass.snapshot</PackagePath>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>

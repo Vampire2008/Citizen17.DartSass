@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup>
+		<None Include="$(MSBuildThisFileDirectory)../runtimes/dart-sass.android-x86/sass/sass">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<Link>dart-sass.android-x86/sass</Link>
+			<Visible>False</Visible>
+		</None>
+		<None Include="$(MSBuildThisFileDirectory)../runtimes/dart-sass.android-x86/src/dart/dart">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<Link>dart-sass.android-x86/src/dart</Link>
+			<Visible>False</Visible>
+		</None>
+		<None Include="$(MSBuildThisFileDirectory)../runtimes/dart-sass.android-x86/src/sass.snapshot">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<Link>dart-sass.android-x86/src/sass.snapshot</Link>
+			<Visible>False</Visible>
+		</None>
+	</ItemGroup>
+</Project>

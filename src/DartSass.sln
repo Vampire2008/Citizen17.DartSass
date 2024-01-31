@@ -25,6 +25,22 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DartSass.Native", "DartSass
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DartSass.Native.linux-arm", "DartSass.Native.linux-arm\DartSass.Native.linux-arm.csproj", "{13E2395C-8F4B-4816-A22B-98D5D1B8A28F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DartSass.Native.android-arm", "DartSass.Native.android-arm\DartSass.Native.android-arm.csproj", "{4DAF2394-19B2-497D-AA25-1EAEF807D7A3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DartSass.Native.android-arm64", "DartSass.Native.android-arm64\DartSass.Native.android-arm64.csproj", "{C73EEE55-0738-44CD-A575-607139B910A7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DartSass.Native.android-x64", "DartSass.Native.android-x64\DartSass.Native.android-x64.csproj", "{41703167-CB61-4DC2-8B0E-FA9F32F3ECDB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DartSass.Native.android-x86", "DartSass.Native.android-x86\DartSass.Native.android-x86.csproj", "{51B5FDC9-EC35-4058-918D-0CF1F6119C07}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DartSass.Native.linux-musl-arm", "DartSass.Native.linux-musl-arm\DartSass.Native.linux-musl-arm.csproj", "{C3C4D02C-E263-4CB7-9906-196716718155}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DartSass.Native.linux-musl-arm64", "DartSass.Native.linux-musl-arm64\DartSass.Native.linux-musl-arm64.csproj", "{F5DBD9BE-A7B7-468A-92D6-D1D53916D779}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DartSass.Native.linux-musl-x64", "DartSass.Native.linux-musl-x64\DartSass.Native.linux-musl-x64.csproj", "{D36E1125-CE6F-4671-A32F-6FDCBB4D39E6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DartSass.Native.linux-musl-x86", "DartSass.Native.linux-musl-x86\DartSass.Native.linux-musl-x86.csproj", "{86DCD3C1-CCFB-48D8-8809-4581EE2E5F29}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +91,38 @@ Global
 		{13E2395C-8F4B-4816-A22B-98D5D1B8A28F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13E2395C-8F4B-4816-A22B-98D5D1B8A28F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13E2395C-8F4B-4816-A22B-98D5D1B8A28F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DAF2394-19B2-497D-AA25-1EAEF807D7A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DAF2394-19B2-497D-AA25-1EAEF807D7A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DAF2394-19B2-497D-AA25-1EAEF807D7A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DAF2394-19B2-497D-AA25-1EAEF807D7A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C73EEE55-0738-44CD-A575-607139B910A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C73EEE55-0738-44CD-A575-607139B910A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C73EEE55-0738-44CD-A575-607139B910A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C73EEE55-0738-44CD-A575-607139B910A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41703167-CB61-4DC2-8B0E-FA9F32F3ECDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41703167-CB61-4DC2-8B0E-FA9F32F3ECDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41703167-CB61-4DC2-8B0E-FA9F32F3ECDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41703167-CB61-4DC2-8B0E-FA9F32F3ECDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51B5FDC9-EC35-4058-918D-0CF1F6119C07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51B5FDC9-EC35-4058-918D-0CF1F6119C07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51B5FDC9-EC35-4058-918D-0CF1F6119C07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51B5FDC9-EC35-4058-918D-0CF1F6119C07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3C4D02C-E263-4CB7-9906-196716718155}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3C4D02C-E263-4CB7-9906-196716718155}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3C4D02C-E263-4CB7-9906-196716718155}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3C4D02C-E263-4CB7-9906-196716718155}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5DBD9BE-A7B7-468A-92D6-D1D53916D779}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5DBD9BE-A7B7-468A-92D6-D1D53916D779}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5DBD9BE-A7B7-468A-92D6-D1D53916D779}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5DBD9BE-A7B7-468A-92D6-D1D53916D779}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D36E1125-CE6F-4671-A32F-6FDCBB4D39E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D36E1125-CE6F-4671-A32F-6FDCBB4D39E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D36E1125-CE6F-4671-A32F-6FDCBB4D39E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D36E1125-CE6F-4671-A32F-6FDCBB4D39E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86DCD3C1-CCFB-48D8-8809-4581EE2E5F29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86DCD3C1-CCFB-48D8-8809-4581EE2E5F29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86DCD3C1-CCFB-48D8-8809-4581EE2E5F29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86DCD3C1-CCFB-48D8-8809-4581EE2E5F29}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

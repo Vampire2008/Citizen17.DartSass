@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+		<Description>Dart Sass runtime for Android Arm</Description>
+	</PropertyGroup>
+
+	<Import Project="../../build/runtime.props" />
+	<Import Project="../../build/common.props" />
+
+	<ItemGroup>
+		<None Update="build\DartSass.Native.android-arm.props">
+			<Pack>true</Pack>
+			<PackagePath>build\DartSass.Native.android-arm.props</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\dart-sass\android-arm\dart-sass\sass" Link="dart-sass.android-arm\sass">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.android-arm/sass</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\dart-sass\android-arm\dart-sass\src\dart" Link="dart-sass.android-arm\src\dart">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.android-arm/src/dart</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\dart-sass\android-arm\dart-sass\src\sass.snapshot" Link="dart-sass.android-arm\src\sass.snapshot">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.android-arm/src/sass.snapshot</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+</Project>
