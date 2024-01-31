@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -32,13 +33,15 @@ public class DartSassCompiler
             return;
         }
 
+        var executionLocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
             if (RuntimeInformation.OSArchitecture == Architecture.X64)
             {
                 pathToExecutable = "./dart-sass.win-x64/sass.bat";
             }
-            if (RuntimeInformation.OSArchitecture == Architecture.X86 || !File.Exists(pathToExecutable))
+            if (RuntimeInformation.OSArchitecture == Architecture.X86 || !File.Exists(Path.Combine(executionLocation, pathToExecutable)))
             {
                 pathToExecutable = "./dart-sass.win-x86/sass.bat";
             }
@@ -73,6 +76,9 @@ public class DartSassCompiler
                 pathToExecutable = "./dart-sass.macos-arm64/sass";
             }
         }
+
+        if (!string.IsNullOrEmpty(pathToExecutable))
+            pathToExecutable = Path.Combine(executionLocation, pathToExecutable);
 
         if (!File.Exists(pathToExecutable))
         {

@@ -9,7 +9,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+		<TargetFrameworks>net5.0;net6.0;net8.0</TargetFrameworks>
 		<LangVersion>latest</LangVersion>
 		<Authors>Mikhail Kislenko</Authors>
 		<Description>Library for compiling Sass files using Dart Sass runtime.
@@ -20,11 +20,19 @@ Dart Sass should be install in system or add one of following packages:
  * DartSass.Native.linux-arm64
  * DartSass.Native.linux-arm
  * DartSass.Native.linux-x86
+ * DartSass.Native.linux-musl-x64
+ * DartSass.Native.linux-musl-arm64
+ * DartSass.Native.linux-musl-arm
+ * DartSass.Native.linux-musl-x86
  * DartSass.Native.macos-x64
- * DartSass.Native.macos-arm64</Description>
+ * DartSass.Native.macos-arm64
+ * DartSass.Native.android-x64
+ * DartSass.Native.android-arm64
+ * DartSass.Native.android-arm
+ * DartSass.Native.android-x86</Description>
 		<SignAssembly>False</SignAssembly>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Version>2.1.0</Version>
+		<Version>2.2.0</Version>
 		<PackageReleaseNotes>v 1.1.0:
  * Added support of Linux Arm64 and MacOS arm64
  * Added support of -q flag
@@ -37,6 +45,10 @@ v 2.0.0:
 
 v 2.1.0
  * Added support for 32-bit ARM Linux package
+
+v 2.2.0
+ * Now Dart Sass compiler searches in directories relative to execution assembly
+ * Added .NET 8 target
 </PackageReleaseNotes>
 	</PropertyGroup>
 

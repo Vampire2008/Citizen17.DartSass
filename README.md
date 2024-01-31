@@ -14,8 +14,22 @@ By default package doesn't contain Dart Sass runtime. It can use installed in sy
  * DartSass.Native.linux-arm64
  * DartSass.Native.linux-arm
  * DartSass.Native.linux-x86
+ * DartSass.Native.linux-musl-x64
+ * DartSass.Native.linux-musl-arm64
+ * DartSass.Native.linux-musl-arm
+ * DartSass.Native.linux-musl-x86
  * DartSass.Native.macos-x64
  * DartSass.Native.macos-arm64
+ * DartSass.Native.android-x64
+ * DartSass.Native.android-arm64
+ * DartSass.Native.android-arm
+ * DartSass.Native.android-x86
+
+Note: My library cannot detect is android device or linux musl. You must provide path to compiller for these platforms.
+Example:
+```csharp
+var compiler = new DartSassCompiller(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "./dart-sass.android-x64/sass"));
+```
 
 ## Usage
 
