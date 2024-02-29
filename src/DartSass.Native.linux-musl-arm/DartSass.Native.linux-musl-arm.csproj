@@ -14,17 +14,17 @@
 			<PackagePath>build\DartSass.Native.linux-musl-arm.props</PackagePath>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Include="..\..\dart-sass\linux-musl-arm\dart-sass\sass" Link="dart-sass.linux-musl-arm\sass">
+		<None Include="..\..\dart-sass\linux-arm-musl\dart-sass\sass" Link="dart-sass.linux-musl-arm\sass">
 			<Pack>true</Pack>
 			<PackagePath>runtimes/dart-sass.linux-musl-arm/sass</PackagePath>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Include="..\..\dart-sass\linux-musl-arm\dart-sass\src\dart" Link="dart-sass.linux-musl-arm\src\dart">
+		<None Include="..\..\dart-sass\linux-arm-musl\dart-sass\src\dart" Link="dart-sass.linux-musl-arm\src\dart">
 			<Pack>true</Pack>
 			<PackagePath>runtimes/dart-sass.linux-musl-arm/src/dart</PackagePath>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Include="..\..\dart-sass\linux-musl-arm\dart-sass\src\sass.snapshot" Link="dart-sass.linux-musl-arm\src\sass.snapshot">
+		<None Include="..\..\dart-sass\linux-arm-musl\dart-sass\src\sass.snapshot" Link="dart-sass.linux-musl-arm\src\sass.snapshot">
 			<Pack>true</Pack>
 			<PackagePath>runtimes/dart-sass.linux-musl-arm/src/sass.snapshot</PackagePath>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
