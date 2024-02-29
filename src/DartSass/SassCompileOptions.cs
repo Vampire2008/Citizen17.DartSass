@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Citizen17.DartSass;
@@ -63,6 +65,36 @@ public class SassCompileOptions
     /// </summary>
     public bool? QuietDeps { get; set; }
 
+    /// <summary>
+    /// Tells Sass to parse the input file as the indented syntax.
+    /// <seealso href="https://sass-lang.com/documentation/cli/dart-sass/#indented"/>
+    /// </summary>
+    public bool? Indented { get; set; }
+
+    /// <summary>
+    /// Built-in importer(s) to use for pkg: URLs.
+    /// <seealso href="https://sass-lang.com/documentation/cli/dart-sass/#pkg-importer-nodejs"/>
+    /// </summary>
+    public SassPkgImporterType? PkgImporter { get; set; }
+
+    /// <summary>
+    /// Tells Sass whether to emit a CSS file when an error occurs during compilation.
+    /// <seealso href="https://sass-lang.com/documentation/cli/dart-sass/#error-css"/>
+    /// </summary>
+    public bool? ErrorCSS { get; set; }
+
+    /// <summary>
+    /// This option tells Sass to treat a particular type of deprecation warning as an error.
+    /// <seealso href="https://sass-lang.com/documentation/cli/dart-sass/#fatal-deprecation"/>
+    /// </summary>
+    public IEnumerable<string> FatalDeprecation { get; set; }
+
+    /// <summary>
+    /// This flag tells Sass to stop compiling immediately when an error is detected, rather than trying to compile other Sass files that may not contain errors.
+    /// <seealso href="https://sass-lang.com/documentation/cli/dart-sass/#stop-on-error"/>
+    /// </summary>
+    public bool StopOnError { get; set; }
+
     internal string BuildArgs(bool outputToSdtout)
     {
         var sb = new StringBuilder();
@@ -106,7 +138,7 @@ public class SassCompileOptions
 
         if (EmbedSourceMap.HasValue)
         {
-            sb.Append(EmbedSourceMap.Value ? "--embed-source-map " : "--no-embed-source-map ");
+            sb.Append(MakeYesNoParameter(EmbedSourceMap.Value, "embed-source-map"));
         }
 
         if (StyleType.HasValue)
@@ -118,7 +150,7 @@ public class SassCompileOptions
 
         if (EmitCharset.HasValue)
         {
-            sb.Append(EmitCharset.Value ? "--charset " : "--no-charset ");
+            sb.Append(MakeYesNoParameter(EmitCharset.Value, "charset"));
         }
 
         if (Update && !outputToSdtout)
@@ -148,10 +180,41 @@ public class SassCompileOptions
 
         if (QuietDeps.HasValue)
         {
-            sb.Append($"--{(!QuietDeps.Value ? "no-" : string.Empty)}quiet-deps ");
+            sb.Append(MakeYesNoParameter(QuietDeps.Value, "quiet-deps"));
+        }
+
+        if (Indented.HasValue)
+        {
+            sb.Append(MakeYesNoParameter(Indented.Value, "indented"));
+        }
+
+        if (PkgImporter.HasValue)
+        {
+            sb.Append($"--pkg-importer={PkgImporter.Value.ToString().ToLowerInvariant()} ");
+        }
+
+        if (ErrorCSS.HasValue)
+        {
+            sb.Append(MakeYesNoParameter(ErrorCSS.Value, "error-css"));
+        }
+
+        if (FatalDeprecation?.Any() ?? false)
+        {
+            sb.Append("--fatal-deprecation=");
+            sb.AppendJoin(',', FatalDeprecation);
+            sb.Append(' ');
+        }
+
+        if (StopOnError)
+        {
+            sb.Append("--stop-on-error ");
         }
 
         return sb.ToString();
     }
 
+    private string MakeYesNoParameter(bool parameterValue, string parameterText)
+    {
+        return $"--{(!parameterValue ? "no-" : string.Empty)}{parameterText} ";
+    }
 }

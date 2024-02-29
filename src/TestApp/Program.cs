@@ -5,8 +5,15 @@ using TestApp;
 Console.WriteLine("Hello, World!");
 
 
-var dartSass = new DartSassCompiler();
+var dartSass = new DartSassCompiler(DartSassNativeType.WinX64);
 
 var tester = new Tester(dartSass);
 
-tester.Compile().Wait();
+try
+{
+    tester.Compile().Wait();
+}
+catch (Exception e)
+{
+    throw;
+}

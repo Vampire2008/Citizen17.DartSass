@@ -98,6 +98,14 @@ public class DartSassCompiler
     }
 
     /// <summary>
+    /// Creates compiler instance
+    /// </summary>
+    /// <param name="nativeType">Dart Sass native that you want to use (corresponding Nuget must be added)</param>
+    public DartSassCompiler(DartSassNativeType nativeType) : this(GetCompilerPathByNativeType(nativeType))
+    {
+    }
+
+    /// <summary>
     /// Compile file to CSS and returns code
     /// </summary>
     /// <param name="inputFilePath">Path to file for compilation</param>
@@ -110,19 +118,12 @@ public class DartSassCompiler
         var result = await _runtime.ExecuteAsync($"{inputFilePath} {args}", null, cancellationToken).ConfigureAwait(false);
 
         var parsed = ParseStdErr(result.StdErr);
-        if (result.ExitCode != 0)
-        {
-            throw new SassCompileException(parsed.e,
-                result.StdErr,
-                parsed.w,
-                parsed.dw,
-                parsed.d);
-        }
+        EnsureSuccess(result, parsed);
 
         return new(result.StdOut,
-            parsed.w,
-            parsed.dw,
-            parsed.d);
+            parsed.Warnings,
+            parsed.DeprecationWarnings,
+            parsed.Debug);
     }
 
     /// <summary>
@@ -226,14 +227,7 @@ public class DartSassCompiler
         var output = await _runtime.ExecuteAsync($"{filesArgs} {args}", null, cancellationToken).ConfigureAwait(false);
 
         var parsed = ParseStdErr(output.StdErr);
-        if (output.ExitCode != 0)
-        {
-            throw new SassCompileException(parsed.e,
-                output.StdErr,
-                parsed.w,
-                parsed.dw,
-                parsed.d);
-        }
+        EnsureSuccess(output, parsed);
 
         var resultFiles = new List<string>();
         var sourceMapEnabled = options == null || (!options.GenerateSourceMap.HasValue || options.GenerateSourceMap.Value)
@@ -254,9 +248,9 @@ public class DartSassCompiler
             }
         }
         return new(resultFiles,
-            parsed.w,
-            parsed.dw,
-            parsed.d);
+            parsed.Warnings,
+            parsed.DeprecationWarnings,
+            parsed.Debug);
     }
 
     /// <summary>
@@ -274,19 +268,12 @@ public class DartSassCompiler
         var result = await _runtime.ExecuteAsync(args, code, cancellationToken).ConfigureAwait(false);
 
         var parsed = ParseStdErr(result.StdErr);
-        if (result.ExitCode != 0)
-        {
-            throw new SassCompileException(parsed.e,
-                result.StdErr,
-                parsed.w,
-                parsed.dw,
-                parsed.d);
-        }
+        EnsureSuccess(result, parsed);
 
         return new(result.StdOut,
-            parsed.w,
-            parsed.dw,
-            parsed.d);
+            parsed.Warnings,
+            parsed.DeprecationWarnings,
+            parsed.Debug);
     }
 
     /// <summary>
@@ -300,7 +287,7 @@ public class DartSassCompiler
         return result.StdOut;
     }
 
-    private static (IEnumerable<SassMessage> w, IEnumerable<SassDeprecationWarning> dw, IEnumerable<SassMessage> d, IEnumerable<SassMessage> e)
+    private static StdErrParseResult
         ParseStdErr(string output)
     {
         var warnings = new List<SassMessage>();
@@ -331,7 +318,7 @@ public class DartSassCompiler
                 errors.Add(ParseError(lines, i));
             }
         }
-        return (warnings, deprecationWarnings, debug, errors);
+        return new(errors, warnings, deprecationWarnings, debug);
     }
 
     private static SassMessage ParseWarning(IReadOnlyList<string> lines, int position)
@@ -430,5 +417,72 @@ public class DartSassCompiler
 
         }
         return new(message, stackTraceBuilder.ToString(), rawMessageBuilder.ToString());
+    }
+
+    private static void EnsureSuccess(RuntimeResult result, StdErrParseResult parsed)
+    {
+        if (result.ExitCode != 0)
+        {
+            if (string.IsNullOrWhiteSpace(result.StdErr))
+            {
+                var lines = result.StdOut.Split('\n');
+
+                var error = lines.Length > 0
+                    ? lines[0]
+                    : MessageStrings.UnknownError;
+
+                throw new SassCompileException(error, result.StdOut);
+            }
+            throw new SassCompileException(parsed.Errors,
+                result.StdErr,
+                parsed.Warnings,
+                parsed.DeprecationWarnings,
+                parsed.Debug);
+        }
+    }
+
+    private static string GetCompilerPathByNativeType(DartSassNativeType nativeType)
+    {
+        switch (nativeType) {
+            case DartSassNativeType.WinX64:
+                return FormatCompilerPathWithPlatform("win-x64", true);
+            case DartSassNativeType.WinX86:
+                return FormatCompilerPathWithPlatform("win-x86", true);
+            case DartSassNativeType.LinuxX64:
+                return FormatCompilerPathWithPlatform("linux-x64");
+            case DartSassNativeType.LinuxX86:
+                return FormatCompilerPathWithPlatform("linux-x86");
+            case DartSassNativeType.LinuxArm:
+                return FormatCompilerPathWithPlatform("linux-arm");
+            case DartSassNativeType.LinuxArm64:
+                return FormatCompilerPathWithPlatform("linux-arm64");
+            case DartSassNativeType.LinuxMuslX64:
+                return FormatCompilerPathWithPlatform("linux-musl-x64");
+            case DartSassNativeType.LinuxMuslX86:
+                return FormatCompilerPathWithPlatform("linux-musl-x86");
+            case DartSassNativeType.LinuxMuslArm:
+                return FormatCompilerPathWithPlatform("linux-musl-arm");
+            case DartSassNativeType.LinuxMuslArm64:
+                return FormatCompilerPathWithPlatform("linux-musl-arm64");
+            case DartSassNativeType.MacOSX64:
+                return FormatCompilerPathWithPlatform("macos-x64");
+            case DartSassNativeType.MacOSArm64:
+                return FormatCompilerPathWithPlatform("macos-arm64");
+            case DartSassNativeType.AndroidX64:
+                return FormatCompilerPathWithPlatform("android-x64");
+            case DartSassNativeType.AndroidX86:
+                return FormatCompilerPathWithPlatform("android-x86");
+            case DartSassNativeType.AndroidArm:
+                return FormatCompilerPathWithPlatform("android-arm");
+            case DartSassNativeType.AndroidArm64:
+                return FormatCompilerPathWithPlatform("android-arm64");
+            default:
+                throw new ArgumentOutOfRangeException(nameof(nativeType), nativeType, "Undefined Dart Sass native type");
+        }
+    }
+
+    private static string FormatCompilerPathWithPlatform(string nativePlatform, bool isBat = false)
+    {
+        return $"./dart-sass.{nativePlatform}/sass{(isBat ? ".bat" : "")}";
     }
 }

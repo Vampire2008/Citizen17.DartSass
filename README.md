@@ -25,10 +25,10 @@ By default package doesn't contain Dart Sass runtime. It can use installed in sy
  * DartSass.Native.android-arm
  * DartSass.Native.android-x86
 
-Note: My library cannot detect is android device or linux musl. You must provide path to compiller for these platforms.
+Note: My library cannot detect is android device or linux musl. You must provide value with concrete type.
 Example:
 ```csharp
-var compiler = new DartSassCompiller(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "./dart-sass.android-x64/sass"));
+var compiler = new DartSassCompiller(DartSassNativeType.AndroidX64);
 ```
 
 ## Usage
@@ -47,29 +47,40 @@ If you have dedicated Dart Sass runtime you can pass it as parameter to construc
 
 ```csharp
 var compiler = new DartSassCompiller("/path/to/sass/executable");
-``` 
+```
+
+Also you can path `DartSassNativeType` enum value to specify which Dart Sass from Nuget to use.
+
+```csharp
+var compiler = new DartSassCompiller(DartSassNativeType.AndroidX64);
+```
 
 ### Options
-You can set default options that will be used on evert compile.
+You can set default options that will be used on every compile.
 ```csharp
 compiler.CompileOptions = new SassCompileOptions
 {
     StyleType = StyleType.Expanded,
     EmitCharset = true,
     Update = false,
-    ImportPaths = new List<string>
-    {
+    ImportPaths = [
         "/path/to/imports1",
         "/path/to/imports2"
-    },
-
+    ],
     GenerateSourceMap = true,
     SourceMapUrlType = SourceMapUrlType.Relative,
     EmbedSources = false,
     EmbedSourceMap = false,
     Quiet = false,
-    QuietDeps = false
-
+    QuietDeps = false,
+    Indented = false,
+    PkgImporter = SassPkgImporterType.Node,
+    ErrorCSS = false,
+    FatalDeprecation = [
+        SassDeprecations.BogusCombinators,
+        SassDeprecations.CallString
+    ],
+    StopOnError = true
 };
 ```
 
