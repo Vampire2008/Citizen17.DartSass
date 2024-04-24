@@ -1,4 +1,6 @@
 $DartSassVersion = Select-Xml -Path .\build\runtime.props -XPath /Project/PropertyGroup/Version | ForEach-Object { $_.Node.InnerXml }
+$DartSassVersionParts = $DartSassVersion.Split(".");
+$DartSassVersion = "$($DartSassVersionParts[0]).$($DartSassVersionParts[1]).$($DartSassVersionParts[2])"
 $DownloadUrl = "https://github.com/sass/dart-sass/releases/download/$($DartSassVersion)/"
 $TempDir = "./dart-sass/temp"
 

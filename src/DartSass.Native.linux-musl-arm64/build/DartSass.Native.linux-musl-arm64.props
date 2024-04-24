@@ -3,17 +3,17 @@
 	<ItemGroup>
 		<None Include="$(MSBuildThisFileDirectory)../runtimes/dart-sass.linux-musl-arm64/sass/sass">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<Link>dart-sass.linux-arm64/sass</Link>
+			<Link>dart-sass.linux-musl-arm64/sass</Link>
 			<Visible>False</Visible>
 		</None>
-		<None Include="$(MSBuildThisFileDirectory)../runtimes/dart-sass.linux-arm64/src/dart/dart">
+		<None Include="$(MSBuildThisFileDirectory)../runtimes/dart-sass.linux-musl-arm64/src/dart/dart">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<Link>dart-sass.linux-arm64/src/dart</Link>
+			<Link>dart-sass.linux-musl-arm64/src/dart</Link>
 			<Visible>False</Visible>
 		</None>
-		<None Include="$(MSBuildThisFileDirectory)../runtimes/dart-sass.linux-arm64/src/sass.snapshot">
+		<None Include="$(MSBuildThisFileDirectory)../runtimes/dart-sass.linux-musl-arm64/src/sass.snapshot">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<Link>dart-sass.linux-arm64/src/sass.snapshot</Link>
+			<Link>dart-sass.linux-musl-arm64/src/sass.snapshot</Link>
 			<Visible>False</Visible>
 		</None>
 	</ItemGroup>
