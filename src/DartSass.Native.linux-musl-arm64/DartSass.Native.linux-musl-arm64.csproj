@@ -9,7 +9,7 @@
 	<Import Project="../../build/common.props" />
 
 	<ItemGroup>
-		<None Update="build\DartSass.Native.linux-musl-musl-arm64.props">
+		<None Update="build\DartSass.Native.linux-musl-arm64.props">
 			<Pack>true</Pack>
 			<PackagePath>build\DartSass.Native.linux-musl-arm64.props</PackagePath>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
