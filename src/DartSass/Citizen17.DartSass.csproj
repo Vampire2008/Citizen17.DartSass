@@ -32,7 +32,7 @@ Dart Sass should be install in system or add one of following packages:
  * DartSass.Native.android-x86</Description>
 		<SignAssembly>False</SignAssembly>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Version>2.3.0</Version>
+		<Version>2.4.0</Version>
 		<PackageReleaseNotes>v 1.1.0:
  * Added support of Linux Arm64 and MacOS arm64
  * Added support of -q flag
@@ -53,6 +53,10 @@ v 2.2.0
 v 2.3.0
  * Added support next options of Dart Sass: Indended, ErrorCSS, PkgImporter, FatalDeprecation, StopOnError
  * Added new constructor with enum parameter for choosing Dart Sass runtime from Nuget
+
+v 2.4.0
+ * Added support newxt options of Dart Sass: FutureDeprecation, SilenceDeprecation
+ * Added new deprecation CssFunctionMixing and future deprecation Import
 </PackageReleaseNotes>
 	</PropertyGroup>
 

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -90,6 +89,18 @@ public class SassCompileOptions
     public IEnumerable<string> FatalDeprecation { get; set; }
 
     /// <summary>
+    /// This option tells Sass to opt-in to a future type of deprecation warning early, emitting warnings even though the deprecation is not yet active.
+    /// <seealso href="https://sass-lang.com/documentation/cli/dart-sass/#future-deprecation"/>
+    /// </summary>
+    public IEnumerable<string> FutureDeprecation { get; set; }
+
+    /// <summary>
+    /// This option tells Sass to silence a particular type of deprecation warning if you wish to temporarily ignore the deprecation.
+    /// <seealso href="https://sass-lang.com/documentation/cli/dart-sass/#silence-deprecation"/>
+    /// </summary>
+    public IEnumerable<string> SilenceDeprecation { get; set; }
+
+    /// <summary>
     /// This flag tells Sass to stop compiling immediately when an error is detected, rather than trying to compile other Sass files that may not contain errors.
     /// <seealso href="https://sass-lang.com/documentation/cli/dart-sass/#stop-on-error"/>
     /// </summary>
@@ -138,7 +149,7 @@ public class SassCompileOptions
 
         if (EmbedSourceMap.HasValue)
         {
-            sb.Append(MakeYesNoParameter(EmbedSourceMap.Value, "embed-source-map"));
+            sb.AppendYesNoParameter("embed-source-map", EmbedSourceMap.Value);
         }
 
         if (StyleType.HasValue)
@@ -150,7 +161,7 @@ public class SassCompileOptions
 
         if (EmitCharset.HasValue)
         {
-            sb.Append(MakeYesNoParameter(EmitCharset.Value, "charset"));
+            sb.AppendYesNoParameter("charset", EmitCharset.Value);
         }
 
         if (Update && !outputToSdtout)
@@ -180,12 +191,12 @@ public class SassCompileOptions
 
         if (QuietDeps.HasValue)
         {
-            sb.Append(MakeYesNoParameter(QuietDeps.Value, "quiet-deps"));
+            sb.AppendYesNoParameter("quiet-deps", QuietDeps.Value);
         }
 
         if (Indented.HasValue)
         {
-            sb.Append(MakeYesNoParameter(Indented.Value, "indented"));
+            sb.AppendYesNoParameter("indented", Indented.Value);
         }
 
         if (PkgImporter.HasValue)
@@ -195,14 +206,22 @@ public class SassCompileOptions
 
         if (ErrorCSS.HasValue)
         {
-            sb.Append(MakeYesNoParameter(ErrorCSS.Value, "error-css"));
+            sb.AppendYesNoParameter("error-css", ErrorCSS.Value);
         }
 
         if (FatalDeprecation?.Any() ?? false)
         {
-            sb.Append("--fatal-deprecation=");
-            sb.AppendJoin(',', FatalDeprecation);
-            sb.Append(' ');
+            sb.AppendJoinParameter("fatal-deprecation", FatalDeprecation);
+        }
+
+        if (FutureDeprecation?.Any() ?? false)
+        {
+            sb.AppendJoinParameter("future-deprecation", FutureDeprecation);
+        }
+
+        if (SilenceDeprecation?.Any() ?? false)
+        {
+            sb.AppendJoinParameter("silence-deprecation", SilenceDeprecation);
         }
 
         if (StopOnError)
@@ -211,10 +230,5 @@ public class SassCompileOptions
         }
 
         return sb.ToString();
-    }
-
-    private string MakeYesNoParameter(bool parameterValue, string parameterText)
-    {
-        return $"--{(!parameterValue ? "no-" : string.Empty)}{parameterText} ";
     }
 }

@@ -60,4 +60,14 @@ public static class SassDeprecations
     /// <seealso href="https://sass-lang.com/documentation/breaking-changes/duplicate-var-flags"/>
     /// </summary>
     public const string DuplicateVarFlags = "duplicate-var-flags";
+
+    /// <summary>
+    /// Mixins and functions whose names begin with --
+    /// </summary>
+    public const string CssFunctionMixing = "css-function-mixin";
+
+    public static class Future
+    {
+        public const string Import = "import";
+    }
 }

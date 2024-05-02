@@ -22,14 +22,12 @@ namespace TestApp
 
             Console.WriteLine();
 
-            try
+            result = await _compiler.CompileToFileAsync("./TestSheet.scss", "./MyOutput.css", new SassCompileOptions
             {
-                result = await _compiler.CompileToFileAsync("./TestSheet.scss", "./MyOutput.css", new SassCompileOptions { ImportPaths = ["path1", "path2"]});
-            }
-            catch (SassCompileException e)
-            {
-                throw;
-            }
+                ImportPaths = ["path1", "path2"],
+                SilenceDeprecation = [SassDeprecations.CssFunctionMixing],
+                FutureDeprecation = [SassDeprecations.Future.Import]
+            });
 
             foreach (var item in result.Files)
                 Console.WriteLine(item);

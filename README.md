@@ -80,6 +80,12 @@ compiler.CompileOptions = new SassCompileOptions
         SassDeprecations.BogusCombinators,
         SassDeprecations.CallString
     ],
+    FutureDeprecation = [
+        SassDeprecations.Future.Import
+    ],
+    SilenceDeprecation = [
+        SassDeprecations.CssFunctionMixing
+    ],
     StopOnError = true
 };
 ```
