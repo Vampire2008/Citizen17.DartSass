@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
 	<TargetFramework>net5.0</TargetFramework>
-    <Version>1.77.2</Version>
+    <Version>1.77.3</Version>
     <IncludeBuildOutput>false</IncludeBuildOutput>
 	<Authors>Sass Team, Mikhail Kislenko</Authors>
   </PropertyGroup>
