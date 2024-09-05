@@ -39,41 +39,45 @@ public class DartSassCompiler
         {
             if (RuntimeInformation.OSArchitecture == Architecture.X64)
             {
-                pathToExecutable = "./dart-sass.win-x64/sass.bat";
+                pathToExecutable = GetCompilerPathByNativeType(DartSassNativeType.WinX64);
             }
             if (RuntimeInformation.OSArchitecture == Architecture.X86 || !File.Exists(Path.Combine(executionLocation, pathToExecutable)))
             {
-                pathToExecutable = "./dart-sass.win-x86/sass.bat";
+                pathToExecutable = GetCompilerPathByNativeType(DartSassNativeType.WinX86);
+            }
+            if (RuntimeInformation.OSArchitecture == Architecture.Arm64)
+            {
+                pathToExecutable = GetCompilerPathByNativeType(DartSassNativeType.WinArm64);
             }
         }
         else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
         {
             if (RuntimeInformation.OSArchitecture == Architecture.X64)
             {
-                pathToExecutable = "./dart-sass.linux-x64/sass";
+                pathToExecutable = GetCompilerPathByNativeType(DartSassNativeType.LinuxX64);
             }
             else if (RuntimeInformation.OSArchitecture == Architecture.X86)
             {
-                pathToExecutable = "./dart-sass.linux-x86/sass";
+                pathToExecutable = GetCompilerPathByNativeType(DartSassNativeType.LinuxX86);
             }
             else if (RuntimeInformation.OSArchitecture == Architecture.Arm64)
             {
-                pathToExecutable = "./dart-sass.linux-arm64/sass";
+                pathToExecutable = GetCompilerPathByNativeType(DartSassNativeType.LinuxArm64);
             }
             else if (RuntimeInformation.OSArchitecture == Architecture.Arm)
             {
-                pathToExecutable = "./dart-sass.linux-arm/sass";
+                pathToExecutable = GetCompilerPathByNativeType(DartSassNativeType.LinuxArm);
             }
         }
         else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
         {
             if (RuntimeInformation.OSArchitecture == Architecture.X64)
             {
-                pathToExecutable = "./dart-sass.macos-x64/sass";
+                pathToExecutable = GetCompilerPathByNativeType(DartSassNativeType.MacOSX64);
             }
             else if (RuntimeInformation.OSArchitecture == Architecture.Arm64)
             {
-                pathToExecutable = "./dart-sass.macos-arm64/sass";
+                pathToExecutable = GetCompilerPathByNativeType(DartSassNativeType.MacOSArm64);
             }
         }
 
@@ -448,6 +452,8 @@ public class DartSassCompiler
                 return FormatCompilerPathWithPlatform("win-x64", true);
             case DartSassNativeType.WinX86:
                 return FormatCompilerPathWithPlatform("win-x86", true);
+            case DartSassNativeType.WinArm64:
+                return FormatCompilerPathWithPlatform("win-arm64", true);
             case DartSassNativeType.LinuxX64:
                 return FormatCompilerPathWithPlatform("linux-x64");
             case DartSassNativeType.LinuxX86:
@@ -456,6 +462,8 @@ public class DartSassCompiler
                 return FormatCompilerPathWithPlatform("linux-arm");
             case DartSassNativeType.LinuxArm64:
                 return FormatCompilerPathWithPlatform("linux-arm64");
+            case DartSassNativeType.LinuxRiscv64:
+                return FormatCompilerPathWithPlatform("linux-riscv64");
             case DartSassNativeType.LinuxMuslX64:
                 return FormatCompilerPathWithPlatform("linux-musl-x64");
             case DartSassNativeType.LinuxMuslX86:
@@ -464,6 +472,8 @@ public class DartSassCompiler
                 return FormatCompilerPathWithPlatform("linux-musl-arm");
             case DartSassNativeType.LinuxMuslArm64:
                 return FormatCompilerPathWithPlatform("linux-musl-arm64");
+            case DartSassNativeType.LinuxMuslRiscv64:
+                return FormatCompilerPathWithPlatform("linux-musl-riscv64");
             case DartSassNativeType.MacOSX64:
                 return FormatCompilerPathWithPlatform("macos-x64");
             case DartSassNativeType.MacOSArm64:
@@ -476,6 +486,8 @@ public class DartSassCompiler
                 return FormatCompilerPathWithPlatform("android-arm");
             case DartSassNativeType.AndroidArm64:
                 return FormatCompilerPathWithPlatform("android-arm64");
+            case DartSassNativeType.AndroidRiscv64:
+                return FormatCompilerPathWithPlatform("android-riscv64");
             default:
                 throw new ArgumentOutOfRangeException(nameof(nativeType), nativeType, "Undefined Dart Sass native type");
         }

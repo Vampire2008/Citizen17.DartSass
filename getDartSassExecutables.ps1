@@ -27,25 +27,29 @@ function downloadAndExtract($name, $title) {
 	}
 }
 
-downloadAndExtract "windows-x64.zip"         "Windows x64"
-downloadAndExtract "windows-ia32.zip"        "Windows x86"
+downloadAndExtract "windows-x64.zip"           "Windows x64"
+downloadAndExtract "windows-ia32.zip"          "Windows x86"
+downloadAndExtract "windows-arm64.zip"         "Windows arm64"
 
-downloadAndExtract "linux-x64.tar.gz"        "Linux x64"
-downloadAndExtract "linux-ia32.tar.gz"       "Linux x86"
-downloadAndExtract "linux-arm.tar.gz"        "Linux arm"
-downloadAndExtract "linux-arm64.tar.gz"      "Linux arm64"
+downloadAndExtract "linux-x64.tar.gz"          "Linux x64"
+downloadAndExtract "linux-ia32.tar.gz"         "Linux x86"
+downloadAndExtract "linux-arm.tar.gz"          "Linux arm"
+downloadAndExtract "linux-arm64.tar.gz"        "Linux arm64"
+downloadAndExtract "linux-riscv64.tar.gz"      "Linux riscv64"
 
-downloadAndExtract "linux-x64-musl.tar.gz"   "Linux musl x64"
-downloadAndExtract "linux-ia32-musl.tar.gz"  "Linux musl x86"
-downloadAndExtract "linux-arm-musl.tar.gz"   "Linu muslx arm"
-downloadAndExtract "linux-arm64-musl.tar.gz" "Linux musl arm64"
+downloadAndExtract "linux-x64-musl.tar.gz"     "Linux musl x64"
+downloadAndExtract "linux-ia32-musl.tar.gz"    "Linux musl x86"
+downloadAndExtract "linux-arm-musl.tar.gz"     "Linux musl arm"
+downloadAndExtract "linux-arm64-musl.tar.gz"   "Linux musl arm64"
+downloadAndExtract "linux-riscv64-musl.tar.gz" "Linux musl riscv64"
 
-downloadAndExtract "macos-x64.tar.gz"        "MacOS x64"
-downloadAndExtract "macos-arm64.tar.gz"      "MacOS arm64"
+downloadAndExtract "macos-x64.tar.gz"          "MacOS x64"
+downloadAndExtract "macos-arm64.tar.gz"        "MacOS arm64"
 
-downloadAndExtract "android-x64.tar.gz"      "Android x64"
-downloadAndExtract "android-ia32.tar.gz"     "Android x86"
-downloadAndExtract "android-arm.tar.gz"      "Android arm"
-downloadAndExtract "android-arm64.tar.gz"    "Android arm64"
+downloadAndExtract "android-x64.tar.gz"        "Android x64"
+downloadAndExtract "android-ia32.tar.gz"       "Android x86"
+downloadAndExtract "android-arm.tar.gz"        "Android arm"
+downloadAndExtract "android-arm64.tar.gz"      "Android arm64"
+downloadAndExtract "android-riscv64.tar.gz"    "Android riscv64"
 
 Remove-Item -Path $TempDir -Recurse

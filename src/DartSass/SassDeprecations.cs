@@ -22,6 +22,11 @@ public static class SassDeprecations
     public const string MozDocument = "moz-document";
 
     /// <summary>
+    /// Imports using relative canonical URLs.
+    /// </summary>
+    public const string RelativeCanonical = "relative-canonical";
+
+    /// <summary>
     /// Declaring new variables with !global.
     /// </summary>
     public const string NewGlobal = "new-global";
@@ -62,9 +67,28 @@ public static class SassDeprecations
     public const string DuplicateVarFlags = "duplicate-var-flags";
 
     /// <summary>
+    /// Passing percentages to the Sass abs() function.
+    /// <seealso href="https://sass-lang.com/documentation/breaking-changes/abs-percent/"/>
+    /// </summary>
+    public const string AbsPercent = "abs-percent";
+
+    /// <summary>
     /// Mixins and functions whose names begin with --
+    /// <seealso href="https://sass-lang.com/documentation/breaking-changes/css-function-mixin/"/>
     /// </summary>
     public const string CssFunctionMixing = "css-function-mixin";
+
+    /// <summary>
+    /// Declarations after or between nested rules.
+    /// <seealso href="https://sass-lang.com/documentation/breaking-changes/mixed-decls/"/>
+    /// </summary>
+    public const string MixedDeclarations = "mixed-decls";
+
+    /// <summary>
+    /// meta.feature-exists
+    /// <seealso href="https://sass-lang.com/documentation/breaking-changes/feature-exists/"/>
+    /// </summary>
+    public const string FeatureExists = "feature-exists";
 
     public static class Future
     {

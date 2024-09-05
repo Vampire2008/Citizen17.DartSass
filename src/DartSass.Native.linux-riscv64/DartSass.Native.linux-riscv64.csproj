@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+		<Description>Dart Sass runtime for Linux riscv64</Description>
+	</PropertyGroup>
+
+	<Import Project="../../build/runtime.props" />
+	<Import Project="../../build/common.props" />
+
+	<ItemGroup>
+		<None Update="build\DartSass.Native.linux-riscv64.props">
+			<Pack>true</Pack>
+			<PackagePath>build\DartSass.Native.linux-riscv64.props</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\dart-sass\linux-riscv64\dart-sass\sass" Link="dart-sass.linux-riscv64\sass">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.linux-riscv64/sass</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\dart-sass\linux-riscv64\dart-sass\src\dart" Link="dart-sass.linux-riscv64\src\dart">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.linux-riscv64/src/dart</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\..\dart-sass\linux-riscv64\dart-sass\src\sass.snapshot" Link="dart-sass.linux-riscv64\src\sass.snapshot">
+			<Pack>true</Pack>
+			<PackagePath>runtimes/dart-sass.linux-riscv64/src/sass.snapshot</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+</Project>

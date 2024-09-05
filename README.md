@@ -1,4 +1,5 @@
 # Citizen17.DartSass
+
 Library for compiling SASS using Dart Sass runtime.
 
 ## Install
@@ -8,25 +9,31 @@ Install package using NuGet.
 ## Runtime
 
 By default package doesn't contain Dart Sass runtime. It can use installed in system Dart Sass or you can one of packages with runtime:
- * DartSass.Native.win-x64
- * DartSass.Native.win-x86
- * DartSass.Native.linux-x64
- * DartSass.Native.linux-arm64
- * DartSass.Native.linux-arm
- * DartSass.Native.linux-x86
- * DartSass.Native.linux-musl-x64
- * DartSass.Native.linux-musl-arm64
- * DartSass.Native.linux-musl-arm
- * DartSass.Native.linux-musl-x86
- * DartSass.Native.macos-x64
- * DartSass.Native.macos-arm64
- * DartSass.Native.android-x64
- * DartSass.Native.android-arm64
- * DartSass.Native.android-arm
- * DartSass.Native.android-x86
 
-Note: My library cannot detect is android device or linux musl. You must provide value with concrete type.
+* DartSass.Native.win-x64
+* DartSass.Native.win-x86
+* DartSass.Native.win-arm64
+* DartSass.Native.linux-x64
+* DartSass.Native.linux-arm64
+* DartSass.Native.linux-arm
+* DartSass.Native.linux-x86
+* DartSass.Native.linux-riscv64
+* DartSass.Native.linux-musl-x64
+* DartSass.Native.linux-musl-arm64
+* DartSass.Native.linux-musl-arm
+* DartSass.Native.linux-musl-x86
+* DartSass.Native.linux-musl-riscv64
+* DartSass.Native.macos-x64
+* DartSass.Native.macos-arm64
+* DartSass.Native.android-x64
+* DartSass.Native.android-arm64
+* DartSass.Native.android-arm
+* DartSass.Native.android-x86
+* DartSass.Native.android-riscv64
+
+Note: My library cannot detect is android device or linux musl or Risc-V OS architecture. You must provide value with concrete type.
 Example:
+
 ```csharp
 var compiler = new DartSassCompiller(DartSassNativeType.AndroidX64);
 ```
@@ -56,7 +63,9 @@ var compiler = new DartSassCompiller(DartSassNativeType.AndroidX64);
 ```
 
 ### Options
+
 You can set default options that will be used on every compile.
+
 ```csharp
 compiler.CompileOptions = new SassCompileOptions
 {
@@ -95,6 +104,7 @@ Also every compile method can accept options. If options passed they override de
 ### Compile from file
 
 Use `CompileAsync` method to get compiled code from file source.
+
 ```csharp
 SassCodeCompilationResult result = await compiler.CompileAsync("/path/to/source.scss");
 string code = result.Code;
@@ -119,6 +129,7 @@ SassFilesCompilationResult result = await compiler.CompileToFileAsync("/path/to/
 IEnumerable<string> files = result.Files;
 
 ```
+
 Result file: `/path/to/source/source.css` and `/path/to/source/source.css.map` if Source maps enabled.
 
 Also you can pass custom name for output file.
@@ -129,7 +140,6 @@ IEnumerable<string> files = result.Files;
 ```
 
 Result file: `/path/to/source/dest.css` and `/path/to/source/dest.css.map` if Source maps enabled.
-
 
 ```csharp
 SassFilesCompilationResult result = await compiler.CompileToFileAsync("/path/to/source/source.scss", "/path/to/dest/dest.css");
@@ -221,11 +231,12 @@ foreach (var debugMessage in debugMessages) {
 ### Errors
 
 If compilation fails with errors it throws `SassCompileException`. It contains next properties:
- * `string RawOutput`
- * `IEnumerable<SassMessage> Errors`
- * `IEnumerable<SassMessage> Warnings`
- * `IEnumerable<SassDeprecationWarning> DeprecationWarnings`
- * `IEnumerable<SassMessage> Debug`
+
+* `string RawOutput`
+* `IEnumerable<SassMessage> Errors`
+* `IEnumerable<SassMessage> Warnings`
+* `IEnumerable<SassDeprecationWarning> DeprecationWarnings`
+* `IEnumerable<SassMessage> Debug`
 
 ### Version
 
