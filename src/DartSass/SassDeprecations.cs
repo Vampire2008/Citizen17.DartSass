@@ -90,8 +90,26 @@ public static class SassDeprecations
     /// </summary>
     public const string FeatureExists = "feature-exists";
 
+    /// <summary>
+    /// Certain uses of built-in sass:color functions.
+    /// </summary>
+    public const string Color4Api = "color-4-api";
+
+    /// <summary>
+    /// Using global color functions instead of sass:color
+    /// </summary>
+    public const string ColorFunctions = "color-functions";
+
     public static class Future
     {
+        /// <summary>
+        /// @import rules.
+        /// </summary>
         public const string Import = "import";
+
+        /// <summary>
+        /// Global built-in functions that are available in sass: modules
+        /// </summary>
+        public const string GlobalBuildIn = "global-builtin";
     }
 }
