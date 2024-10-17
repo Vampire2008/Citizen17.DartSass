@@ -100,16 +100,18 @@ public static class SassDeprecations
     /// </summary>
     public const string ColorFunctions = "color-functions";
 
+    /// <summary>
+    /// @import rules.
+    /// </summary>
+    public const string Import = "import";
+
+    /// <summary>
+    /// Global built-in functions that are available in sass: modules
+    /// </summary>
+    public const string GlobalBuildIn = "global-builtin";
+
     public static class Future
     {
-        /// <summary>
-        /// @import rules.
-        /// </summary>
-        public const string Import = "import";
-
-        /// <summary>
-        /// Global built-in functions that are available in sass: modules
-        /// </summary>
-        public const string GlobalBuildIn = "global-builtin";
+        // Currently there aren't future deprecations
     }
 }

@@ -90,7 +90,7 @@ compiler.CompileOptions = new SassCompileOptions
         SassDeprecations.CallString
     ],
     FutureDeprecation = [
-        SassDeprecations.Future.Import
+        SassDeprecations.Future.Import // Currently there isn't future deprecations, this is leaved for example
     ],
     SilenceDeprecation = [
         SassDeprecations.CssFunctionMixing

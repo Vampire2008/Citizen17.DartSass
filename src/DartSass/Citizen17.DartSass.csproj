@@ -32,7 +32,7 @@ Dart Sass should be install in system or add one of following packages:
  * DartSass.Native.android-x86</Description>
 		<SignAssembly>False</SignAssembly>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Version>2.6.0</Version>
+		<Version>2.7.0</Version>
 		<PackageReleaseNotes>v 1.1.0:
  * Added support of Linux Arm64 and MacOS arm64
  * Added support of -q flag
@@ -66,6 +66,9 @@ v 2.5.0
 v 2.6.0
  * Added new deprecations: Color4Api, ColorFunctions
  * Added new future deprecation: GlobalBuildIn
+ 
+v 2.7.0
+ * Future deprecations Import and GlobalBuildIn moved to all deprecations
 </PackageReleaseNotes>
 	</PropertyGroup>
 
