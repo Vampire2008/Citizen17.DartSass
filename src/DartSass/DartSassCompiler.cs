@@ -94,7 +94,7 @@ public class DartSassCompiler
 
             if (string.IsNullOrEmpty(pathToExecutable))
             {
-                throw new ArgumentException("Sass not found");
+                throw new ArgumentException("Dart Sass executable not found.");
             }
         }
 
