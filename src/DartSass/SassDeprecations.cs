@@ -92,16 +92,19 @@ public static class SassDeprecations
 
     /// <summary>
     /// Certain uses of built-in sass:color functions.
+    /// <seealso href="https://sass-lang.com/documentation/breaking-changes/color-4-api"/>
     /// </summary>
     public const string Color4Api = "color-4-api";
 
     /// <summary>
     /// Using global color functions instead of sass:color
+    /// <seealso href="https://sass-lang.com/documentation/breaking-changes/color-functions"/>
     /// </summary>
     public const string ColorFunctions = "color-functions";
 
     /// <summary>
     /// @import rules.
+    /// <seealso href="https://sass-lang.com/documentation/breaking-changes/import"/>
     /// </summary>
     public const string Import = "import";
 
@@ -109,6 +112,11 @@ public static class SassDeprecations
     /// Global built-in functions that are available in sass: modules
     /// </summary>
     public const string GlobalBuildIn = "global-builtin";
+
+    /// <summary>
+    /// Functions named “type”.
+    /// </summary>
+    public const string TypeFunction = "type-function";
 
     public static class Future
     {

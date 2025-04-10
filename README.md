@@ -48,7 +48,7 @@ using Citizen17.DartSass;
 var compiler = new DartSassCompiller();
 ```
 
-When instance creates it try find Dart Sass runtime. First it search in project. If not found it try search in system using environmen variable `PATH`.
+When instance creates it try find Dart Sass runtime. First it search in project. If not found it try search in system using environment variable `PATH`.
 
 If you have dedicated Dart Sass runtime you can pass it as parameter to constructor.
 
