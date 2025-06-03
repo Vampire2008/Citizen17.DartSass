@@ -19,7 +19,8 @@ jobs:
         shell: pwsh
 
       - name: Pack
-        run: dotnet pack ./src/DartSass.sln -o ./nuget -c Release 
+        run: dotnet pack ./src/DartSass.sln -o ./nuget -c Release
+        continue-on-error: true
 
       - name: Upload
         run: dotnet nuget push "./nuget/*" -k ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
