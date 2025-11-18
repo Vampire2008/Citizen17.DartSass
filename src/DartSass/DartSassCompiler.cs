@@ -1,31 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Citizen17.DartSass;
 
-public class DartSassCompiler
+public partial class DartSassCompiler
 {
     private readonly DartSassRuntime _runtime;
 
     /// <summary>
     /// Get or set options that passed to compiler if method options is null
     /// </summary>
-    public SassCompileOptions CompileOptions { get; set; }
+    public SassCompileOptions? CompileOptions { get; set; }
+
+    private static readonly string[] ExecutableExtensions = ["", ".bat", ".sh"];
 
     /// <summary>
     /// Creates compiler instance
     /// </summary>
     /// <param name="pathToExecutable">Path to Dart Sass executable. If not passed tries to find in dependencies or in environment variable PATH</param>
     /// <exception cref="ArgumentException">Throws if Dart Sass executable not found.</exception>
-    public DartSassCompiler(string pathToExecutable = null)
+    public DartSassCompiler(string? pathToExecutable = null)
     {
         if (File.Exists(pathToExecutable))
         {
@@ -33,7 +29,7 @@ public class DartSassCompiler
             return;
         }
 
-        var executionLocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        var executionLocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
 
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
@@ -41,7 +37,7 @@ public class DartSassCompiler
             {
                 pathToExecutable = GetCompilerPathByNativeType(DartSassNativeType.WinX64);
             }
-            if (RuntimeInformation.OSArchitecture == Architecture.X86 || !File.Exists(Path.Combine(executionLocation, pathToExecutable)))
+            if (RuntimeInformation.OSArchitecture == Architecture.X86 || !File.Exists(Path.Combine(executionLocation, pathToExecutable ?? string.Empty)))
             {
                 pathToExecutable = GetCompilerPathByNativeType(DartSassNativeType.WinX86);
             }
@@ -86,10 +82,10 @@ public class DartSassCompiler
 
         if (!File.Exists(pathToExecutable))
         {
-            var environmentPath = Environment.GetEnvironmentVariable("PATH");
+            var environmentPath = Environment.GetEnvironmentVariable("PATH") ?? string.Empty;
 
             var paths = environmentPath.Split(';');
-            pathToExecutable = paths.SelectMany(x => new[] { "", ".bat", ".sh" }.Select(e => Path.Combine(x, $"sass{e}")))
+            pathToExecutable = paths.SelectMany(x => ExecutableExtensions.Select(e => Path.Combine(x, $"sass{e}")))
                 .FirstOrDefault(File.Exists);
 
             if (string.IsNullOrEmpty(pathToExecutable))
@@ -116,7 +112,7 @@ public class DartSassCompiler
     /// <param name="options">Compile options</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Compiled CSS code</returns>
-    public async Task<SassCodeCompilationResult> CompileAsync(string inputFilePath, SassCompileOptions options = null, CancellationToken cancellationToken = default)
+    public async Task<SassCodeCompilationResult> CompileAsync(string inputFilePath, SassCompileOptions? options = null, CancellationToken cancellationToken = default)
     {
         var args = options?.BuildArgs(true) ?? CompileOptions?.BuildArgs(true);
         var result = await _runtime.ExecuteAsync($"{inputFilePath} {args}", null, cancellationToken).ConfigureAwait(false);
@@ -139,14 +135,10 @@ public class DartSassCompiler
     /// <param name="cancellationToken"></param>
     /// <returns>List of result files</returns>
     /// <exception cref="ArgumentNullException">Throws if inputFilePath is empty</exception>
-    public Task<SassFilesCompilationResult> CompileToFileAsync(string inputFilePath, string outputFilePath = null, SassCompileOptions options = null, CancellationToken cancellationToken = default)
+    public Task<SassFilesCompilationResult> CompileToFileAsync(string inputFilePath, string? outputFilePath = null, SassCompileOptions? options = null, CancellationToken cancellationToken = default)
     {
-        if (string.IsNullOrWhiteSpace(inputFilePath))
-        {
-            throw new ArgumentNullException(nameof(inputFilePath));
-        }
-
-        return CompileToFilesAsync(new Dictionary<string, string> { { inputFilePath, outputFilePath } }, null, options, cancellationToken);
+        ArgumentException.ThrowIfNullOrWhiteSpace(inputFilePath);
+        return CompileToFilesAsync(new Dictionary<string, string?> { { inputFilePath, outputFilePath } }, null, options, cancellationToken);
     }
 
     /// <summary>
@@ -158,13 +150,10 @@ public class DartSassCompiler
     /// <param name="cancellationToken"></param>
     /// <returns>List of result files</returns>
     /// <exception cref="ArgumentNullException">Throws if files is null</exception>
-    public Task<SassFilesCompilationResult> CompileToFilesAsync(IEnumerable<string> files, string outputDir = null, SassCompileOptions options = null, CancellationToken cancellationToken = default)
+    public Task<SassFilesCompilationResult> CompileToFilesAsync(IEnumerable<string> files, string? outputDir = null, SassCompileOptions? options = null, CancellationToken cancellationToken = default)
     {
-        if (files == null)
-        {
-            throw new ArgumentNullException(nameof(files));
-        }
-        return CompileToFilesAsync(files.ToDictionary(f => f, _ => (string)null), outputDir, options, cancellationToken);
+        ArgumentNullException.ThrowIfNull(files);
+        return CompileToFilesAsync(files.ToDictionary(f => f, string? (_) => null), outputDir, options, cancellationToken);
     }
 
     /// <summary>
@@ -177,22 +166,19 @@ public class DartSassCompiler
     /// <returns>List of result files</returns>
     /// <exception cref="ArgumentNullException">Throws if dictionary is null</exception>
     /// <exception cref="ArgumentException">Throws if anyone file path is empty</exception>
-    public Task<SassFilesCompilationResult> CompileToFilesAsync(IDictionary<string, string> files,
-        string outputDir = null, SassCompileOptions options = null, CancellationToken cancellationToken = default)
+    public Task<SassFilesCompilationResult> CompileToFilesAsync(
+        IDictionary<string, string?> files,
+        string? outputDir = null, 
+        SassCompileOptions? options = null, 
+        CancellationToken cancellationToken = default)
     {
-        if (files == null)
-        {
-            throw new ArgumentNullException(nameof(files));
-        }
-        if (!files.Any())
-        {
-            return Task.FromResult(new SassFilesCompilationResult());
-        }
-
-        return CompileToFilesInternalAsync(files, outputDir, options, cancellationToken);
+        ArgumentNullException.ThrowIfNull(files);
+        return files.Any() 
+            ? CompileToFilesInternalAsync(files, outputDir, options, cancellationToken) 
+            : Task.FromResult(new SassFilesCompilationResult());
     }
 
-    private async Task<SassFilesCompilationResult> CompileToFilesInternalAsync(IDictionary<string, string> files, string outputDir = null, SassCompileOptions options = null, CancellationToken cancellationToken = default)
+    private async Task<SassFilesCompilationResult> CompileToFilesInternalAsync(IDictionary<string, string?> files, string? outputDir = null, SassCompileOptions? options = null, CancellationToken cancellationToken = default)
     {
         options ??= CompileOptions;
         var args = options?.BuildArgs(false);
@@ -209,7 +195,7 @@ public class DartSassCompiler
                 var outputFileDir = string.IsNullOrWhiteSpace(outputDir)
                     ? Path.GetDirectoryName(pair.Key)
                     : outputDir;
-                outputFile = Path.Combine(outputFileDir, $"{Path.GetFileNameWithoutExtension(pair.Key)}.css");
+                outputFile = Path.Combine(outputFileDir ?? string.Empty, $"{Path.GetFileNameWithoutExtension(pair.Key)}.css");
             }
             else if (string.IsNullOrEmpty(Path.GetDirectoryName(outputFile)))
             {
@@ -244,7 +230,7 @@ public class DartSassCompiler
             }
             if (sourceMapEnabled)
             {
-                var sourceMapFile = Path.Combine(Path.GetDirectoryName(input.Value), $"{Path.GetFileName(input.Value)}.map");
+                var sourceMapFile = Path.Combine(Path.GetDirectoryName(input.Value) ?? string.Empty, $"{Path.GetFileName(input.Value)}.map");
                 if (File.Exists(sourceMapFile))
                 {
                     resultFiles.Add(sourceMapFile);
@@ -264,7 +250,7 @@ public class DartSassCompiler
     /// <param name="options">Compile options</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Compiled code</returns>
-    public async Task<SassCodeCompilationResult> CompileCodeAsync(string code, SassCompileOptions options = null, CancellationToken cancellationToken = default)
+    public async Task<SassCodeCompilationResult> CompileCodeAsync(string code, SassCompileOptions? options = null, CancellationToken cancellationToken = default)
     {
         options ??= CompileOptions;
         var args = options?.BuildArgs(false) ?? string.Empty;
@@ -325,13 +311,13 @@ public class DartSassCompiler
         return new(errors, warnings, deprecationWarnings, debug);
     }
 
-    private static SassMessage ParseWarning(IReadOnlyList<string> lines, int position)
+    private static SassMessage ParseWarning(string[] lines, int position)
     {
         var message = lines[position][9..].Trim();
         var rawMessageBuilder = new StringBuilder(lines[position].TrimEnd());
         var j = position + 1;
         var stackTraceBuilder = new StringBuilder();
-        while (!string.IsNullOrWhiteSpace(lines[j]) && j < lines.Count)
+        while (!string.IsNullOrWhiteSpace(lines[j]) && j < lines.Length)
         {
             stackTraceBuilder.AppendLine(lines[j].Trim());
             rawMessageBuilder.AppendLine(lines[j].TrimEnd());
@@ -340,7 +326,7 @@ public class DartSassCompiler
         return new(message, stackTraceBuilder.ToString(), rawMessageBuilder.ToString());
     }
 
-    private static SassDeprecationWarning ParseDeprecationWarning(IReadOnlyList<string> lines, int position)
+    private static SassDeprecationWarning ParseDeprecationWarning(string[] lines, int position)
     {
         var message = lines[position][21..].Trim();
         var rawMessageBuilder = new StringBuilder(lines[position].TrimEnd());
@@ -348,13 +334,12 @@ public class DartSassCompiler
         var stackTraceBuilder = new StringBuilder();
         var j = position + 1;
         var stage = MessageStage.Recommendation;
-        var dispRegEx = new Regex(@"^\d*\s+[╷│╵]", RegexOptions.CultureInvariant);
-        while (stage != MessageStage.End && j < lines.Count)
+        while (stage != MessageStage.End && j < lines.Length)
         {
             switch (stage)
             {
                 case MessageStage.Recommendation:
-                    if (dispRegEx.IsMatch(lines[j]))
+                    if (DisplayLineRegex().IsMatch(lines[j]))
                     {
                         stage = MessageStage.Display;
                         continue;
@@ -365,7 +350,7 @@ public class DartSassCompiler
                     }
                     break;
                 case MessageStage.Display:
-                    if (!dispRegEx.IsMatch(lines[j]))
+                    if (!DisplayLineRegex().IsMatch(lines[j]))
                     {
                         stage = MessageStage.StackTrace;
                         continue;
@@ -395,18 +380,17 @@ public class DartSassCompiler
         return new(message, stackTrace, line);
     }
 
-    private static SassMessage ParseError(IReadOnlyList<string> lines, int position)
+    private static SassMessage ParseError(string[] lines, int position)
     {
         var message = lines[position][7..].Trim();
         var rawMessageBuilder = new StringBuilder(lines[position].TrimEnd());
         var j = position + 1;
         var stackTraceBuilder = new StringBuilder();
         var stage = MessageStage.Display;
-        var dispRegEx = new Regex(@"^\d?\s+[╷│╵]", RegexOptions.CultureInvariant);
-        while (!string.IsNullOrWhiteSpace(lines[j]) && j < lines.Count)
+        while (!string.IsNullOrWhiteSpace(lines[j]) && j < lines.Length)
         {
             if (stage == MessageStage.Display)
-                if (!dispRegEx.IsMatch(lines[j]))
+                if (!DisplayErrorLineRegex().IsMatch(lines[j]))
                     stage = MessageStage.StackTrace;
                 else
                 {
@@ -447,54 +431,40 @@ public class DartSassCompiler
 
     private static string GetCompilerPathByNativeType(DartSassNativeType nativeType)
     {
-        switch (nativeType) {
-            case DartSassNativeType.WinX64:
-                return FormatCompilerPathWithPlatform("win-x64", true);
-            case DartSassNativeType.WinX86:
-                return FormatCompilerPathWithPlatform("win-x86", true);
-            case DartSassNativeType.WinArm64:
-                return FormatCompilerPathWithPlatform("win-arm64", true);
-            case DartSassNativeType.LinuxX64:
-                return FormatCompilerPathWithPlatform("linux-x64");
-            case DartSassNativeType.LinuxX86:
-                return FormatCompilerPathWithPlatform("linux-x86");
-            case DartSassNativeType.LinuxArm:
-                return FormatCompilerPathWithPlatform("linux-arm");
-            case DartSassNativeType.LinuxArm64:
-                return FormatCompilerPathWithPlatform("linux-arm64");
-            case DartSassNativeType.LinuxRiscv64:
-                return FormatCompilerPathWithPlatform("linux-riscv64");
-            case DartSassNativeType.LinuxMuslX64:
-                return FormatCompilerPathWithPlatform("linux-musl-x64");
-            case DartSassNativeType.LinuxMuslX86:
-                return FormatCompilerPathWithPlatform("linux-musl-x86");
-            case DartSassNativeType.LinuxMuslArm:
-                return FormatCompilerPathWithPlatform("linux-musl-arm");
-            case DartSassNativeType.LinuxMuslArm64:
-                return FormatCompilerPathWithPlatform("linux-musl-arm64");
-            case DartSassNativeType.LinuxMuslRiscv64:
-                return FormatCompilerPathWithPlatform("linux-musl-riscv64");
-            case DartSassNativeType.MacOSX64:
-                return FormatCompilerPathWithPlatform("macos-x64");
-            case DartSassNativeType.MacOSArm64:
-                return FormatCompilerPathWithPlatform("macos-arm64");
-            case DartSassNativeType.AndroidX64:
-                return FormatCompilerPathWithPlatform("android-x64");
-            case DartSassNativeType.AndroidX86:
-                return FormatCompilerPathWithPlatform("android-x86");
-            case DartSassNativeType.AndroidArm:
-                return FormatCompilerPathWithPlatform("android-arm");
-            case DartSassNativeType.AndroidArm64:
-                return FormatCompilerPathWithPlatform("android-arm64");
-            case DartSassNativeType.AndroidRiscv64:
-                return FormatCompilerPathWithPlatform("android-riscv64");
-            default:
-                throw new ArgumentOutOfRangeException(nameof(nativeType), nativeType, "Undefined Dart Sass native type");
-        }
+        return nativeType switch
+        {
+            DartSassNativeType.WinX64 => FormatCompilerPathWithPlatform("win-x64", true),
+            DartSassNativeType.WinX86 => FormatCompilerPathWithPlatform("win-x86", true),
+            DartSassNativeType.WinArm64 => FormatCompilerPathWithPlatform("win-arm64", true),
+            DartSassNativeType.LinuxX64 => FormatCompilerPathWithPlatform("linux-x64"),
+            DartSassNativeType.LinuxX86 => FormatCompilerPathWithPlatform("linux-x86"),
+            DartSassNativeType.LinuxArm => FormatCompilerPathWithPlatform("linux-arm"),
+            DartSassNativeType.LinuxArm64 => FormatCompilerPathWithPlatform("linux-arm64"),
+            DartSassNativeType.LinuxRiscv64 => FormatCompilerPathWithPlatform("linux-riscv64"),
+            DartSassNativeType.LinuxMuslX64 => FormatCompilerPathWithPlatform("linux-musl-x64"),
+            DartSassNativeType.LinuxMuslX86 => FormatCompilerPathWithPlatform("linux-musl-x86"),
+            DartSassNativeType.LinuxMuslArm => FormatCompilerPathWithPlatform("linux-musl-arm"),
+            DartSassNativeType.LinuxMuslArm64 => FormatCompilerPathWithPlatform("linux-musl-arm64"),
+            DartSassNativeType.LinuxMuslRiscv64 => FormatCompilerPathWithPlatform("linux-musl-riscv64"),
+            DartSassNativeType.MacOSX64 => FormatCompilerPathWithPlatform("macos-x64"),
+            DartSassNativeType.MacOSArm64 => FormatCompilerPathWithPlatform("macos-arm64"),
+            DartSassNativeType.AndroidX64 => FormatCompilerPathWithPlatform("android-x64"),
+            DartSassNativeType.AndroidX86 => FormatCompilerPathWithPlatform("android-x86"),
+            DartSassNativeType.AndroidArm => FormatCompilerPathWithPlatform("android-arm"),
+            DartSassNativeType.AndroidArm64 => FormatCompilerPathWithPlatform("android-arm64"),
+            DartSassNativeType.AndroidRiscv64 => FormatCompilerPathWithPlatform("android-riscv64"),
+            _ => throw new ArgumentOutOfRangeException(nameof(nativeType), nativeType, "Undefined Dart Sass native type")
+        };
     }
 
     private static string FormatCompilerPathWithPlatform(string nativePlatform, bool isBat = false)
     {
         return $"./dart-sass.{nativePlatform}/sass{(isBat ? ".bat" : "")}";
     }
+
+    [GeneratedRegex(@"^\d*\s+[╷│╵]", RegexOptions.CultureInvariant)]
+    private static partial Regex DisplayLineRegex();
+
+    [GeneratedRegex(@"^\d?\s+[╷│╵]", RegexOptions.CultureInvariant)]
+    private static partial Regex DisplayErrorLineRegex();
 }

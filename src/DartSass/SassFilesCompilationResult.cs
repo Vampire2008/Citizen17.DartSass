@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace Citizen17.DartSass;
+﻿namespace Citizen17.DartSass;
 
 public class SassFilesCompilationResult : SassCompilationResult
 {
@@ -20,6 +17,6 @@ public class SassFilesCompilationResult : SassCompilationResult
 
     internal SassFilesCompilationResult()
     {
-        Files = Enumerable.Empty<string>();
+        Files = [];
     }
 }

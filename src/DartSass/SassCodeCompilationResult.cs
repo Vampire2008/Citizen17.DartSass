@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Citizen17.DartSass;
+﻿namespace Citizen17.DartSass;
 
 public class SassCodeCompilationResult : SassCompilationResult
 {

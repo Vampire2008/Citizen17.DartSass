@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿namespace Citizen17.DartSass;
 
-namespace Citizen17.DartSass;
-
-#if !NET8_0_OR_GREATER
-[Serializable]
-#endif
 public class SassCompileException : Exception
 {
     public string RawOutput { get; }
@@ -29,18 +21,12 @@ public class SassCompileException : Exception
     internal SassCompileException(string error, string rawOutput) : base(error)
     {
         Errors = [new(error, string.Empty, error)];
-        Warnings = Enumerable.Empty<SassMessage>();
-        DeprecationWarnings = Enumerable.Empty<SassDeprecationWarning>();
-        Debug = Enumerable.Empty<SassMessage>();
+        Warnings = [];
+        DeprecationWarnings = [];
+        Debug = [];
         RawOutput = rawOutput;
     }
-
-#if !NET8_0_OR_GREATER
-    protected SassCompileException(SerializationInfo info, StreamingContext context) : base(info, context)
-    {
-    }
-#endif
-
+    
     private static string GetErrorMessage(IEnumerable<SassMessage> errors)
     {
         if (errors.Count() > 1)

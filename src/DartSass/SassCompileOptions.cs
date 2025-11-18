@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 
 namespace Citizen17.DartSass;
 
@@ -45,7 +43,7 @@ public class SassCompileOptions
     /// Additional load path for Sass to look for stylesheets.
     /// <seealso href="https://sass-lang.com/documentation/cli/dart-sass#load-path"/>
     /// </summary>
-    public IList<string> ImportPaths { get; set; }
+    public IList<string>? ImportPaths { get; set; }
     /// <summary>
     /// Compile only stylesheets whose dependencies have been modified more recently than the corresponding CSS file was generated
     /// <seealso href="https://sass-lang.com/documentation/cli/dart-sass#update"/>
@@ -86,19 +84,19 @@ public class SassCompileOptions
     /// This option tells Sass to treat a particular type of deprecation warning as an error.
     /// <seealso href="https://sass-lang.com/documentation/cli/dart-sass/#fatal-deprecation"/>
     /// </summary>
-    public IEnumerable<string> FatalDeprecation { get; set; }
+    public IEnumerable<string>? FatalDeprecation { get; set; }
 
     /// <summary>
     /// This option tells Sass to opt-in to a future type of deprecation warning early, emitting warnings even though the deprecation is not yet active.
     /// <seealso href="https://sass-lang.com/documentation/cli/dart-sass/#future-deprecation"/>
     /// </summary>
-    public IEnumerable<string> FutureDeprecation { get; set; }
+    public IEnumerable<string>? FutureDeprecation { get; set; }
 
     /// <summary>
     /// This option tells Sass to silence a particular type of deprecation warning if you wish to temporarily ignore the deprecation.
     /// <seealso href="https://sass-lang.com/documentation/cli/dart-sass/#silence-deprecation"/>
     /// </summary>
-    public IEnumerable<string> SilenceDeprecation { get; set; }
+    public IEnumerable<string>? SilenceDeprecation { get; set; }
 
     /// <summary>
     /// This flag tells Sass to stop compiling immediately when an error is detected, rather than trying to compile other Sass files that may not contain errors.

@@ -1,11 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Citizen17.DartSass;
 
-internal class DartSassRuntime
+internal sealed class DartSassRuntime
 {
     private readonly string _executable;
 
@@ -14,7 +12,7 @@ internal class DartSassRuntime
         _executable = executable;
     }
 
-    internal async Task<RuntimeResult> ExecuteAsync(string args, string input, CancellationToken cancellationToken)
+    internal async Task<RuntimeResult> ExecuteAsync(string args, string? input, CancellationToken cancellationToken)
     {
         using var process = new Process();
         process.StartInfo.FileName = _executable;

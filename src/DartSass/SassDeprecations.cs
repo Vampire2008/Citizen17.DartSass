@@ -118,6 +118,23 @@ public static class SassDeprecations
     /// </summary>
     public const string TypeFunction = "type-function";
 
+    /// <summary>
+    /// Passing a relative url to compileString().
+    /// </summary>
+    public const string CompileStringRelativeUrl = "compile-string-relative-url";
+
+    /// <summary>
+    /// A rest parameter before a positional or named parameter.
+    /// <seealso href="https://sass-lang.com/documentation/breaking-changes/misplaced-rest"/>
+    /// </summary>
+    public const string MisplacedRest = "misplaced-rest";
+
+    /// <summary>
+    /// Configuring private variables in @use, @forward, or load-css().
+    /// <seealso href="https://sass-lang.com/documentation/breaking-changes/with-private"/>
+    /// </summary>
+    public const string WithPrivate = "with-private";
+
     public static class Future
     {
         // Currently there aren't future deprecations

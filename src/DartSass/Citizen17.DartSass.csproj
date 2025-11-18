@@ -9,7 +9,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<TargetFrameworks>net5.0;net6.0;net8.0</TargetFrameworks>
+		<TargetFrameworks>net8.0;net10.0</TargetFrameworks>
 		<LangVersion>latest</LangVersion>
 		<Authors>Mikhail Kislenko</Authors>
 		<Description>Library for compiling Sass files using Dart Sass runtime.
@@ -32,7 +32,7 @@ Dart Sass should be install in system or add one of following packages:
  * DartSass.Native.android-x86</Description>
 		<SignAssembly>False</SignAssembly>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Version>2.8.0</Version>
+		<Version>3.0.0</Version>
 		<PackageReleaseNotes>v 1.1.0:
  * Added support of Linux Arm64 and MacOS arm64
  * Added support of -q flag
@@ -73,7 +73,14 @@ v 2.7.0
 v 2.8.0
  * Added new deptecation - TypeFunction
  * Fixed error message when Dart Sass executable not found
+
+v 3.0.0
+ * Added target framework .NET 10. Removed target frameworks below .NET 8
+ * Added nullable types support
+ * Added new SASS deprecations
 </PackageReleaseNotes>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
 	<Import Project="../../build/common.props" />

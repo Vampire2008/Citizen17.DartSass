@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace Citizen17.DartSass;
+﻿namespace Citizen17.DartSass;
 
 public class SassCompilationResult
 {
@@ -18,8 +15,8 @@ public class SassCompilationResult
 
     internal SassCompilationResult()
     {
-        Warnings = Enumerable.Empty<SassMessage>();
-        DeprecationWarnings = Enumerable.Empty<SassDeprecationWarning>();
-        Debug = Enumerable.Empty<SassMessage>();
+        Warnings = [];
+        DeprecationWarnings = [];
+        Debug = [];
     }
 }

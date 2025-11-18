@@ -1,0 +1,25 @@
+<Solution>
+  <Project Path="DartSass.Native.android-arm/DartSass.Native.android-arm.csproj" />
+  <Project Path="DartSass.Native.android-arm64/DartSass.Native.android-arm64.csproj" />
+  <Project Path="DartSass.Native.android-riscv64/DartSass.Native.android-riscv64.csproj" />
+  <Project Path="DartSass.Native.android-x64/DartSass.Native.android-x64.csproj" />
+  <Project Path="DartSass.Native.android-x86/DartSass.Native.android-x86.csproj" />
+  <Project Path="DartSass.Native.linux-arm/DartSass.Native.linux-arm.csproj" />
+  <Project Path="DartSass.Native.linux-arm64/DartSass.Native.linux-arm64.csproj" />
+  <Project Path="DartSass.Native.linux-musl-arm/DartSass.Native.linux-musl-arm.csproj" />
+  <Project Path="DartSass.Native.linux-musl-arm64/DartSass.Native.linux-musl-arm64.csproj" />
+  <Project Path="DartSass.Native.linux-musl-riscv64/DartSass.Native.linux-musl-riscv64.csproj" />
+  <Project Path="DartSass.Native.linux-musl-x64/DartSass.Native.linux-musl-x64.csproj" />
+  <Project Path="DartSass.Native.linux-musl-x86/DartSass.Native.linux-musl-x86.csproj" />
+  <Project Path="DartSass.Native.linux-riscv64/DartSass.Native.linux-riscv64.csproj" />
+  <Project Path="DartSass.Native.linux-x64/DartSass.Native.linux-x64.csproj" />
+  <Project Path="DartSass.Native.linux-x86/DartSass.Native.linux-x86.csproj" />
+  <Project Path="DartSass.Native.macos-arm64/DartSass.Native.macos-arm64.csproj" />
+  <Project Path="DartSass.Native.macos-x64/DartSass.Native.macos-x64.csproj" />
+  <Project Path="DartSass.Native.win-arm64/DartSass.Native.win-arm64.csproj" />
+  <Project Path="DartSass.Native.win-x64/DartSass.Native.win-x64.csproj" />
+  <Project Path="DartSass.Native.win-x86/DartSass.Native.win-x86.csproj" />
+  <Project Path="DartSass.Native/DartSass.Native.csproj" />
+  <Project Path="DartSass/Citizen17.DartSass.csproj" />
+  <Project Path="TestApp/TestApp.csproj" />
+</Solution>

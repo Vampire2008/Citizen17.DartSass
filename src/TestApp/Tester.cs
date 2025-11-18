@@ -26,7 +26,8 @@ namespace TestApp
             {
                 ImportPaths = ["path1", "path2"],
                 SilenceDeprecation = [SassDeprecations.CssFunctionMixing],
-                FutureDeprecation = [SassDeprecations.Future.Import]
+                FutureDeprecation = [SassDeprecations.Future.Import],
+                ErrorCSS = false
             });
 
             foreach (var item in result.Files)
