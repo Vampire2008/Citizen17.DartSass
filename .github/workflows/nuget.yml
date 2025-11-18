@@ -23,7 +23,7 @@ jobs:
         shell: pwsh
 
       - name: Pack
-        run: dotnet pack ./src/DartSass.sln -o ./nuget -c Release
+        run: dotnet pack ./src/DartSass.slnx -o ./nuget -c Release
         continue-on-error: true
 
       - name: NuGet login
