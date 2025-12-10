@@ -135,6 +135,12 @@ public static class SassDeprecations
     /// </summary>
     public const string WithPrivate = "with-private";
 
+    /// <summary>
+    /// The Sass if($condition, $if-true, $if-false) function.
+    /// <seealso href="https://sass-lang.com/documentation/breaking-changes/if-function"/>
+    /// </summary>
+    public const string IfFunction = "if-function";
+
     public static class Future
     {
         // Currently there aren't future deprecations

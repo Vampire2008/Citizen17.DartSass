@@ -32,7 +32,7 @@ Dart Sass should be install in system or add one of following packages:
  * DartSass.Native.android-x86</Description>
 		<SignAssembly>False</SignAssembly>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Version>3.0.0</Version>
+		<Version>3.1.0</Version>
 		<PackageReleaseNotes>v 1.1.0:
  * Added support of Linux Arm64 and MacOS arm64
  * Added support of -q flag
@@ -78,6 +78,9 @@ v 3.0.0
  * Added target framework .NET 10. Removed target frameworks below .NET 8
  * Added nullable types support
  * Added new SASS deprecations
+
+v 3.1.0
+ * Added new SassDeprecation - IfFunction
 </PackageReleaseNotes>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
